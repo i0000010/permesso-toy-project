@@ -19,4 +19,3 @@ export async function GET(request: NextRequest, response: NextResponse) {
     }
     return NextResponse.redirect(new URL(`/protected/profile/${user.id}`, request.url));
 }
-

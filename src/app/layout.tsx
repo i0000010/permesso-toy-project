@@ -26,7 +26,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ modal, children }) => {
   return (
     <html lang="en">
       <body className={clsx(inter.className, {'dark': darkTheme})}>
-          <div className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
+          <div className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 h-screen ">
             <Navbar />
             {modal}
             {children}
