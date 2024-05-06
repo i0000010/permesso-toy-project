@@ -1,0 +1,7 @@
+query ListPosts {
+    posts {
+        id
+        title
+        body
+    }
+}
