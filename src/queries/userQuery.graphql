@@ -6,3 +6,12 @@ query GetUserById($id: String!) {
     created_at
   }
 }
+
+mutation CreateUser($id: String, $username: String!) {
+  insert_users_one(object: {id: $id, username: $username}) {
+    id
+    username
+    reputation
+    created_at
+  }
+}

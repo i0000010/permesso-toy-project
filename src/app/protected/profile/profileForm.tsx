@@ -3,12 +3,21 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import clsx from 'clsx';
+import { useMutation } from '@apollo/client';
+import { CreateUserMutation, CreateUserMutationVariables, CreateUserDocument } from '@/generated/graphql';
+import { UserAuth } from "@/context/AuthContext";
+
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required('Required'),
 });
 
 const ProfileForm = () => {
+
+  const { user } = UserAuth();
+  console.log('user: ', user);
+  const [createUser] = useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument);
+
   return (
     <Formik
       initialValues={{
@@ -17,6 +26,15 @@ const ProfileForm = () => {
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
         console.log(values);
+        console.log('id: ', user?.uid);
+        console.log('username: ', values.username);
+        createUser({
+          variables: {
+            id: user?.uid,
+            username: values.username,
+          }
+        });
+
         setSubmitting(false);
       }}
     >

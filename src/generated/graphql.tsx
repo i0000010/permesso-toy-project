@@ -4023,6 +4023,14 @@ export type GetUserByIdQueryVariables = Exact<{
 
 export type GetUserByIdQuery = { __typename?: 'query_root', users_by_pk?: { __typename?: 'users', id: string, username: string, reputation: number, created_at: any } | null };
 
+export type CreateUserMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']['input']>;
+  username: Scalars['String']['input'];
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'mutation_root', insert_users_one?: { __typename?: 'users', id: string, username: string, reputation: number, created_at: any } | null };
+
 
 export const ListPostsDocument = gql`
     query ListPosts {
@@ -4108,3 +4116,40 @@ export type GetUserByIdQueryHookResult = ReturnType<typeof useGetUserByIdQuery>;
 export type GetUserByIdLazyQueryHookResult = ReturnType<typeof useGetUserByIdLazyQuery>;
 export type GetUserByIdSuspenseQueryHookResult = ReturnType<typeof useGetUserByIdSuspenseQuery>;
 export type GetUserByIdQueryResult = Apollo.QueryResult<GetUserByIdQuery, GetUserByIdQueryVariables>;
+export const CreateUserDocument = gql`
+    mutation CreateUser($id: String, $username: String!) {
+  insert_users_one(object: {id: $id, username: $username}) {
+    id
+    username
+    reputation
+    created_at
+  }
+}
+    `;
+export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+
+/**
+ * __useCreateUserMutation__
+ *
+ * To run a mutation, you first call `useCreateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
+      }
+export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
+export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;

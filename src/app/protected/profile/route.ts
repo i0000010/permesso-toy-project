@@ -6,13 +6,15 @@ import { GetUserByIdQuery, GetUserByIdQueryVariables, GetUserByIdDocument } from
 export async function GET(request: NextRequest, response: NextResponse) {
     const encodedSession = request.cookies.get("session")?.value || '';
     const { uid } = await auth().verifySessionCookie(encodedSession, true);
+    console.log('uid: ', uid)
     const { data } = await getClient().query<GetUserByIdQuery, GetUserByIdQueryVariables>({
       query: GetUserByIdDocument,
       variables: {
-        id: uid
+        id: uid,
       }
     });
     const user = data?.users_by_pk;
+    console.log('data: ', data);
   
     if (!user) {
       return NextResponse.redirect(new URL("/protected/profile/create", request.url));

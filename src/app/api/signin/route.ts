@@ -16,8 +16,10 @@ export async function POST(request: NextRequest, response: NextResponse) {
   if (authorization?.startsWith("Bearer ")) {
     const idToken = authorization.split("Bearer ")[1];
     const decodedToken = await auth().verifyIdToken(idToken);
+    console.log('decodedToken: ', decodedToken);
 
     if (decodedToken) {
+      console.log('decodedToken: ', decodedToken);
       //Generate session cookie
       const expiresIn = 60 * 60 * 24 * 5 * 1000;
       const sessionCookie = await auth().createSessionCookie(idToken, {
@@ -27,7 +29,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         name: "session",
         value: sessionCookie,
         maxAge: expiresIn,
-        httpOnly: true,
+        httpOnly: false,
         secure: true,
       };
 
@@ -35,10 +37,10 @@ export async function POST(request: NextRequest, response: NextResponse) {
       cookies().set(options);
     }
 
-    const userId = decodedToken?.uid;
-    console.log('userId: ', userId);
-    const xHasuraUserId = headers().get("x-hasura-user-id");
-    console.log('x-user-id: ', xHasuraUserId);
+    // const userId = decodedToken?.uid;
+    // console.log('userId: ', userId);
+    // const xHasuraUserId = headers().get("x-hasura-user-id");
+    // console.log('x-user-id: ', xHasuraUserId);
   }
 
   return NextResponse.json({}, { status: 200 });
