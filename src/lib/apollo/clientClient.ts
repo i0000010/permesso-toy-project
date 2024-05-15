@@ -24,7 +24,7 @@ export function makeClient() {
       // uri: process.env.X_HASURA_GRAPHQL_URL,
       uri: "https://hip-quail-22.hasura.app/v1/graphql",
       headers: {
-        'x-hasura-admin-secret': "Ym34dnZKn2NcESomb58lXhy9SBOcQusg9FoE4yqTRU4Q792xjWC1mw2HDPcisZ0G",
+        // 'x-hasura-admin-secret': "Ym34dnZKn2NcESomb58lXhy9SBOcQusg9FoE4yqTRU4Q792xjWC1mw2HDPcisZ0G",
       }
   });
 
@@ -49,11 +49,11 @@ export function makeClient() {
             new SSRMultipartLink({
               stripDefer: true,
             }),
-            // authLink.concat(httpLink),
-            httpLink,
+            authLink.concat(httpLink),
+            // httpLink,
           ])
-        : httpLink,
-        // : authLink.concat(httpLink),
+        // : httpLink,
+        : authLink.concat(httpLink),
   });
 }
 

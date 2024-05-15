@@ -1,0 +1,8 @@
+- "!include public_comment_votes.yaml"
+- "!include public_comments.yaml"
+- "!include public_post_tags.yaml"
+- "!include public_post_votes.yaml"
+- "!include public_posts.yaml"
+- "!include public_tags.yaml"
+- "!include public_users.yaml"
+- "!include public_votes.yaml"
