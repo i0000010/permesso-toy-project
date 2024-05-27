@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
   const theme = cookies.get('x-theme') || 'light';
 
   return (
-    <AuthContextProvider>
+    <>
       {/* When the mobile menu is open, add `overflow-hidden` to the `body` element to prevent double scrollbars */}
       <Popover
         as="header"
@@ -148,7 +148,7 @@ const Navbar: React.FC = () => {
           </>
         )}
       </Popover>
-    </AuthContextProvider>
+    </>
   )
 
   // return (

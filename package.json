@@ -10,8 +10,8 @@
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
-    "@apollo/client": "^3.10.1",
-    "@apollo/experimental-nextjs-app-support": "^0.10.0",
+    "@apollo/client": "^3.10.4",
+    "@apollo/experimental-nextjs-app-support": "^0.10.1",
     "@graphql-codegen/typescript": "^4.0.6",
     "@graphql-codegen/typescript-operations": "^4.2.0",
     "@graphql-codegen/typescript-react-apollo": "^4.3.0",
@@ -25,6 +25,8 @@
     "firebase-admin": "^12.1.0",
     "formik": "^2.4.6",
     "graphql": "^16.8.1",
+    "graphql-ws": "^5.16.0",
+    "isomorphic-unfetch": "^4.0.2",
     "js-cookie": "^3.0.5",
     "next": "14.2.2",
     "next-client-cookies": "^1.1.1",

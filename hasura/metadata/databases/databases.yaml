@@ -6,3 +6,11 @@
       isolation_level: read-committed
       use_prepared_statements: false
   tables: "!include default/tables/tables.yaml"
+- name: neon-hip-quail
+  kind: postgres
+  configuration:
+    connection_info:
+      database_url: postgresql://neondb_owner:0whzqO6CHYkb@ep-solitary-mouse-a61q601u.us-west-2.aws.neon.tech/hip-quail-22_db_4965175?sslmode=require
+      isolation_level: read-committed
+      use_prepared_statements: false
+  tables: "!include neon-hip-quail/tables/tables.yaml"

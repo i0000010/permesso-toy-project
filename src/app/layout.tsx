@@ -6,6 +6,8 @@ import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import clsx from 'clsx';
 import { cookies } from 'next/headers';
+import { ApolloWrapper } from '@/lib/apollo/wrapper';
+import { AuthContextProvider } from '@/context/AuthContext';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,12 +28,16 @@ const RootLayout: React.FC<RootLayoutProps> = ({ modal, children }) => {
   return (
     <html lang="en">
       <body className={clsx(inter.className, {'dark': darkTheme})}>
-          <div className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 h-screen ">
-            <Navbar />
-            {modal}
-            {children}
-            <div id="modal-root" />
-          </div>
+        <AuthContextProvider>
+          <ApolloWrapper>
+            <div className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 h-screen ">
+              <Navbar />
+              {modal}
+              {children}
+              <div id="modal-root" />
+            </div>
+          </ApolloWrapper>
+        </AuthContextProvider>
       </body>
     </html>
   );

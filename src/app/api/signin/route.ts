@@ -15,6 +15,8 @@ export async function POST(request: NextRequest, response: NextResponse) {
   const authorization = headers().get("Authorization");
   if (authorization?.startsWith("Bearer ")) {
     const idToken = authorization.split("Bearer ")[1];
+
+    console.log('idToken: ', idToken, '\n');
     const decodedToken = await auth().verifyIdToken(idToken);
     console.log('decodedToken: ', decodedToken);
 
@@ -29,7 +31,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         name: "session",
         value: sessionCookie,
         maxAge: expiresIn,
-        httpOnly: false,
+        // httpOnly: false,
         secure: true,
       };
 
