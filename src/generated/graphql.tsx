@@ -4014,15 +4014,16 @@ export type Votes_Variance_Fields = {
 export type ListPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: number, title: string, body: string }> };
+export type ListPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', title: string, body: string }> };
 
 export type CreatePostMutationVariables = Exact<{
   title: Scalars['String']['input'];
   body: Scalars['String']['input'];
+  user_id: Scalars['String']['input'];
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'mutation_root', insert_posts_one?: { __typename?: 'posts', id: number, title: string, body: string } | null };
+export type CreatePostMutation = { __typename?: 'mutation_root', insert_posts_one?: { __typename?: 'posts', title: string, body: string } | null };
 
 export type GetUserByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -4043,7 +4044,6 @@ export type CreateUserMutation = { __typename?: 'mutation_root', insert_users_on
 export const ListPostsDocument = gql`
     query ListPosts {
   posts {
-    id
     title
     body
   }
@@ -4082,9 +4082,8 @@ export type ListPostsLazyQueryHookResult = ReturnType<typeof useListPostsLazyQue
 export type ListPostsSuspenseQueryHookResult = ReturnType<typeof useListPostsSuspenseQuery>;
 export type ListPostsQueryResult = Apollo.QueryResult<ListPostsQuery, ListPostsQueryVariables>;
 export const CreatePostDocument = gql`
-    mutation CreatePost($title: String!, $body: String!) {
-  insert_posts_one(object: {title: $title, body: $body}) {
-    id
+    mutation CreatePost($title: String!, $body: String!, $user_id: String!) {
+  insert_posts_one(object: {title: $title, body: $body, user_id: $user_id}) {
     title
     body
   }
@@ -4107,6 +4106,7 @@ export type CreatePostMutationFn = Apollo.MutationFunction<CreatePostMutation, C
  *   variables: {
  *      title: // value for 'title'
  *      body: // value for 'body'
+ *      user_id: // value for 'user_id'
  *   },
  * });
  */
