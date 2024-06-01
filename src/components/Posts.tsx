@@ -1,18 +1,18 @@
+import 'server-only';
 import React from 'react';
-// import { getClient } from '@/lib/apollo/serverClient';
-// import { ListPostsQuery, ListPostsDocument } from '@/generated/graphql';
+import { getClient } from '@/lib/apollo/server';
+import { ListPostsQuery, ListPostsDocument } from '@/generated/graphql';
 
 
 const Posts = async () => {
 
-    // const data = await getClient().query<ListPostsQuery>({
-    //     query: ListPostsDocument
-    // });
+    const data = await getClient().query<ListPostsQuery>({
+        query: ListPostsDocument
+    });
 
     return (
         <div>
             <h1>Posts</h1>
-            {/* <p>{JSON.stringify(data)}</p>
             <ul>
                 {data.data.posts.map((post) => (
                     <li key={post.id}>
@@ -20,7 +20,7 @@ const Posts = async () => {
                         <p>{post.body}</p>
                     </li>
                 ))}
-            </ul> */}
+            </ul>
         </div>
     );
 }
