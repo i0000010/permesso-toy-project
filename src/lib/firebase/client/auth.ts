@@ -33,8 +33,6 @@ export async function signInWithGoogle(router: AppRouterInstance, nextRoute: str
 
                 // Not sure I need to do this (get the hasura claim). All I need
                 // is the uid, which I can get from the decoded token.
-                // I included this because I followed some instructions from this link
-                // which says to do it. Will look into it more later.
                 // https://hasura.io/blog/authentication-and-authorization-using-hasura-and-firebase
                 const idTokenResult = await result.user.getIdTokenResult();
                 console.log("idTokenResult: ", idTokenResult.claims, "\n");
@@ -48,37 +46,6 @@ export async function signInWithGoogle(router: AppRouterInstance, nextRoute: str
 
                 router.push(nextRoute);
                 return;
-
-                // TODO: this conditional is modified from
-                // https://hasura.io/blog/authentication-and-authorization-using-hasura-and-firebase
-                // it is not impelmented correctly yet
-                // if (!hasuraClaim) {
-                //     // Check if refresh is required.
-                //     const metadataRef = firebase
-                //         .database()
-                //         .ref("metadata/" + result.user.uid + "/refreshTime");
-
-                //     token = metadataRef.on("value", async (data) => {
-                //         if(!data.exists) return
-                //         // Force refresh to pick up the latest custom claims changes.
-                //         const token = await result.user.getIdToken(true);
-                //         return token;
-                //     });
-                // }
-
-                const url = `${process.env.NEXT_PUBLIC_URL}/api/signin`;
-                console.log('url: ', url)
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-
-                if (response.ok) {
-                    console.log('response ok')
-                    router.push(nextRoute);
-                }
             } else {
                 console.log('no user')
             }
@@ -91,14 +58,15 @@ export async function signInWithGoogle(router: AppRouterInstance, nextRoute: str
 export async function signOutUser(router: AppRouterInstance) {
     try {
         await signOut(auth);
+        router.push("/");
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/signout`, {
-            method: "POST",
-        });
+        // const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/signout`, {
+        //     method: "POST",
+        // });
 
-        if (response.ok) {
-            router.push("/");
-        }
+        // if (response.ok) {
+        //     router.push("/");
+        // }
     } catch (error) {
         console.error("Error signing out with Google", error);
     }

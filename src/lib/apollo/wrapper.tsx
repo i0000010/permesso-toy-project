@@ -21,7 +21,7 @@ const HASURA_GRAPHQL_URL = "https://hip-quail-22.hasura.app/v1/graphql";
 function makeClient() {
   const httpLink = new HttpLink({
       // https://studio.apollographql.com/public/spacex-l4uc6p/
-      uri: HASURA_GRAPHQL_URL,
+      uri:  HASURA_GRAPHQL_URL,
       headers: {
           // 'x-hasura-admin-secret': process.env.X_HASURA_ADMIN_SECRET!,
           // 'x-hasura-admin-secret': 'Ym34dnZKn2NcESomb58lXhy9SBOcQusg9FoE4yqTRU4Q792xjWC1mw2HDPcisZ0G'
