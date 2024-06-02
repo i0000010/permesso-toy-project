@@ -1,8 +1,18 @@
 query ListPosts {
-    posts {
-        title
-        body
+  posts {
+    id
+    title
+    body
+    created_at
+    score
+    user {
+      id
+      username
+      created_at
+      role
+      reputation
     }
+  }
 }
 
 mutation CreatePost($title: String!, $body: String!, $user_id: String!) {

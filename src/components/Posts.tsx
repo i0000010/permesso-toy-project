@@ -7,12 +7,14 @@ import { ListPostsQuery, ListPostsDocument } from '@/generated/graphql';
 const Posts = async () => {
 
     const data = await getClient().query<ListPostsQuery>({
-        query: ListPostsDocument
+        query: ListPostsDocument,
+        fetchPolicy: 'no-cache',
     });
 
     return (
         <div>
-            <h1>Posts</h1>
+            <p># posts: {data.data.posts.length}</p>
+            <p>data: {JSON.stringify(data)}</p>
             <ul>
                 {data.data.posts.map((post) => (
                     <li key={post.id}>

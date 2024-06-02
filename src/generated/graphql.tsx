@@ -4014,7 +4014,7 @@ export type Votes_Variance_Fields = {
 export type ListPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', title: string, body: string }> };
+export type ListPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: number, title: string, body: string, created_at: any, score: number, user: { __typename?: 'users', id: string, username: string, created_at: any, role: string, reputation: number } }> };
 
 export type CreatePostMutationVariables = Exact<{
   title: Scalars['String']['input'];
@@ -4044,8 +4044,18 @@ export type CreateUserMutation = { __typename?: 'mutation_root', insert_users_on
 export const ListPostsDocument = gql`
     query ListPosts {
   posts {
+    id
     title
     body
+    created_at
+    score
+    user {
+      id
+      username
+      created_at
+      role
+      reputation
+    }
   }
 }
     `;

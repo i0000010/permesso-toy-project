@@ -4,7 +4,20 @@ import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rs
 
 export const { getClient } = registerApolloClient(() => {
   return new ApolloClient({
-    cache: new InMemoryCache(),
+    // cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            posts: {
+              merge(existing = [], incoming) {
+                return incoming;
+              },
+            },
+          },
+        },
+      },
+    }),
     link: new HttpLink({
         uri: process.env.X_HASURA_GRAPHQL_URL,
         headers: {
