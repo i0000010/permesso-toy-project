@@ -15,9 +15,44 @@ query ListPosts {
   }
 }
 
+query GetPost($id: Int!) {
+  posts_by_pk(id: $id) {
+    id
+    title
+    body
+    created_at
+    score
+    user {
+      id
+      username
+      reputation
+    }
+    comments {
+      id
+      post_id
+      parent_comment_id
+      body
+      score
+      created_at
+      accepted_answer
+      user {
+        id
+        username
+        reputation
+      }
+    }
+  }
+}
+
 mutation CreatePost($title: String!, $body: String!, $user_id: String!) {
     insert_posts_one(object: {title: $title, body: $body, user_id: $user_id}) {
         title
+        body
+    }
+}
+
+mutation CommentOnPost($post_id: Int!, $body: String!, $user_id: String!, $parent_comment_id: Int) {
+    insert_comments_one(object: {post_id: $post_id, body: $body, user_id: $user_id, parent_comment_id: $parent_comment_id}) {
         body
     }
 }

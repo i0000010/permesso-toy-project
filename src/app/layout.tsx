@@ -32,8 +32,12 @@ const RootLayout: React.FC<RootLayoutProps> = ({ modal, children }) => {
           <ApolloWrapper>
             <div className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 h-screen ">
               <Navbar />
-              {modal}
-              {children}
+              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-3xl">
+                  {modal}
+                  {children}
+                </div>
+              </div>
               <div id="modal-root" />
             </div>
           </ApolloWrapper>
