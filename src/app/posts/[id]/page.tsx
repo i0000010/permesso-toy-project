@@ -76,6 +76,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                         </Form>
                     )}
                 </Formik>
+                <div className="text-lg font-semibold mt-4">Comments</div>
                 <Comments comments={data.posts_by_pk.comments} />
             </div>
         </main>

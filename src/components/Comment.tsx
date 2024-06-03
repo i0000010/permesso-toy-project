@@ -89,7 +89,7 @@ const Comment: React.FC<CommentProps> = ({ comment, children }) => {
                     </div>
                 </div>
                 <div>
-                    <p className="mt-2 text-xl">{comment.body}</p>
+                    <p className="mt-2 text-base">{comment.body}</p>
                     {/* // add a button at the bottom right that when clicks reveals a form to respond to this comment */}
                     <div className="flex justify-end">
                         <button
