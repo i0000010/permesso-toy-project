@@ -15,7 +15,7 @@ query ListPosts {
   }
 }
 
-query GetPost($id: Int!) {
+subscription GetPost($id: Int!) {
   posts_by_pk(id: $id) {
     id
     title

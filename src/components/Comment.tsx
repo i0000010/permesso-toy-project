@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useMutation } from "@apollo/client";
-import type { GetPostQuery } from '@/generated/graphql';
+import type { GetPostSubscription } from '@/generated/graphql';
 import { CommentOnPostMutation, CommentOnPostDocument, CommentOnPostMutationVariables } from "@/generated/graphql";
 
 // import firebase user type
@@ -11,13 +11,15 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { UserAuth } from "@/context/AuthContext";
 import * as Yup from 'yup';
 import clsx from 'clsx';
+import { Dispatch, SetStateAction } from 'react';
 
 interface RespondToCommentProps {
     user: User;
-    comment: NonNullable<GetPostQuery["posts_by_pk"]>["comments"][0];
+    comment: NonNullable<GetPostSubscription["posts_by_pk"]>["comments"][0];
+    handleSubmit: Dispatch<SetStateAction<boolean>>;
 };
 
-const RespondToComment: React.FC<RespondToCommentProps> = ({ user, comment }) => {
+const RespondToComment: React.FC<RespondToCommentProps> = ({ user, comment, handleSubmit }) => {
 
     const [createComment] = useMutation<CommentOnPostMutation, CommentOnPostMutationVariables>(CommentOnPostDocument);
 
@@ -41,6 +43,7 @@ const RespondToComment: React.FC<RespondToCommentProps> = ({ user, comment }) =>
                         }
                     });
                     setSubmitting(false);
+                    handleSubmit(false);
                 }}
             >
                 {({ isSubmitting, errors, touched }) => (
@@ -67,7 +70,7 @@ const RespondToComment: React.FC<RespondToCommentProps> = ({ user, comment }) =>
 }
  
 export interface CommentProps {
-    comment: NonNullable<GetPostQuery["posts_by_pk"]>["comments"][0];
+    comment: NonNullable<GetPostSubscription["posts_by_pk"]>["comments"][0];
     children?: React.ReactNode;
 }
 
@@ -98,7 +101,7 @@ const Comment: React.FC<CommentProps> = ({ comment, children }) => {
                         >Respond
                         </button>
                     </div>
-                    {showForm && user && <RespondToComment user={user} comment={comment} />}
+                    {showForm && user && <RespondToComment user={user} comment={comment} handleSubmit={setShowForm} />}
 
 
                 </div>

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { useQuery, useMutation } from "@apollo/client";
-import { GetPostQuery, GetPostDocument, CommentOnPostMutation, CommentOnPostDocument, CommentOnPostMutationVariables } from "@/generated/graphql";
+import { useSubscription, useMutation } from "@apollo/client";
+import { GetPostSubscription, GetPostDocument, CommentOnPostMutation, CommentOnPostDocument, CommentOnPostMutationVariables } from "@/generated/graphql";
 import Post from "@/components/Post";
 import clsx from "clsx";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -17,7 +17,7 @@ interface PostPageProps {
 
 const PostPage: React.FC<PostPageProps> = ({ params }) => {
 
-    const { data, loading, error } = useQuery<GetPostQuery>(GetPostDocument, {
+    const { data, loading, error } = useSubscription<GetPostSubscription>(GetPostDocument, {
         variables: {
             id: params.id
         }
@@ -46,7 +46,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                     validationSchema={Yup.object({
                         body: Yup.string().required('Required'),
                     })}
-                    onSubmit={(values, { setSubmitting }) => {
+                    onSubmit={(values, { setSubmitting, resetForm }) => {
                         createComment({
                             variables: {
                                 body: values.body,
@@ -55,9 +55,10 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                             }
                         });
                         setSubmitting(false);
+                        resetForm();
                     }}
                 >
-                    {({ isSubmitting, errors, touched }) => (
+                    {({ isSubmitting, errors, touched, resetForm }) => (
                         <Form>
                             <div className="overflow-hidden rounded-lg border border-gray-300 dark:border-0 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
                                 <label htmlFor="body" className="sr-only">Body</label>
@@ -68,7 +69,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                                 <div className="flex">
                                 </div>
                                 <div className="flex-shrink-0">
-                                    <button type="submit" className={clsx("inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue hover:bg-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500", isSubmitting && "opacity-50 cursor-not-allowed")}>
+                                    <button type="submit"className={clsx("inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue hover:bg-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500", isSubmitting && "opacity-50 cursor-not-allowed")}>
                                         Add Comment
                                     </button>
                                 </div>

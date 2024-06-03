@@ -11,6 +11,8 @@ import {
   SSRMultipartLink,
   NextSSRApolloClient,
 } from "@apollo/experimental-nextjs-app-support/ssr";
+import { WebSocketLink } from "@apollo/client/link/ws";
+import { SubscriptionClient } from 'subscriptions-transport-ws'
 import { 
   getViewerToken 
 } from "@/lib/firebase/client/auth";
@@ -21,11 +23,8 @@ const HASURA_GRAPHQL_URL = "https://hip-quail-22.hasura.app/v1/graphql";
 function makeClient() {
   const httpLink = new HttpLink({
       // https://studio.apollographql.com/public/spacex-l4uc6p/
-      uri:  HASURA_GRAPHQL_URL,
-      headers: {
-          // 'x-hasura-admin-secret': process.env.X_HASURA_ADMIN_SECRET!,
-          // 'x-hasura-admin-secret': 'Ym34dnZKn2NcESomb58lXhy9SBOcQusg9FoE4yqTRU4Q792xjWC1mw2HDPcisZ0G'
-      }
+      uri:  process.env.NEXT_PUBLIC_X_HASURA_GRAPHQL_URL!,
+      headers: {}
   });
 
   const authLink = setContext(async () => {
@@ -43,6 +42,24 @@ function makeClient() {
     };
   });
 
+
+  const createWSLink = () => {
+    return new WebSocketLink(
+      new SubscriptionClient(process.env.NEXT_PUBLIC_X_HASURA_WEBSOCKET_URL!, {
+        lazy: true,
+        reconnect: true,
+        connectionParams: async () => {
+          const token = await getViewerToken()
+          return {
+            headers: {
+              authorization: token ? `Bearer ${token}` : '',
+            },
+          }
+        },
+      })
+    )
+  }
+
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache(),
     link:
@@ -54,8 +71,8 @@ function makeClient() {
             authLink,
             httpLink,
           ])
-        : ApolloLink.from([authLink, httpLink]),
-        // : ApolloLink.from([httpLink]),
+        : ApolloLink.from([createWSLink(), authLink, httpLink]),
+        // : createWSLink(),
   });
 }
 

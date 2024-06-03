@@ -4016,12 +4016,12 @@ export type ListPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ListPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: number, title: string, body: string, created_at: any, score: number, user: { __typename?: 'users', id: string, username: string, created_at: any, role: string, reputation: number } }> };
 
-export type GetPostQueryVariables = Exact<{
+export type GetPostSubscriptionVariables = Exact<{
   id: Scalars['Int']['input'];
 }>;
 
 
-export type GetPostQuery = { __typename?: 'query_root', posts_by_pk?: { __typename?: 'posts', id: number, title: string, body: string, created_at: any, score: number, user: { __typename?: 'users', id: string, username: string, reputation: number }, comments: Array<{ __typename?: 'comments', id: number, post_id: number, parent_comment_id?: number | null, body: string, score: number, created_at: any, accepted_answer: boolean, user?: { __typename?: 'users', id: string, username: string, reputation: number } | null }> } | null };
+export type GetPostSubscription = { __typename?: 'subscription_root', posts_by_pk?: { __typename?: 'posts', id: number, title: string, body: string, created_at: any, score: number, user: { __typename?: 'users', id: string, username: string, reputation: number }, comments: Array<{ __typename?: 'comments', id: number, post_id: number, parent_comment_id?: number | null, body: string, score: number, created_at: any, accepted_answer: boolean, user?: { __typename?: 'users', id: string, username: string, reputation: number } | null }> } | null };
 
 export type CreatePostMutationVariables = Exact<{
   title: Scalars['String']['input'];
@@ -4109,7 +4109,7 @@ export type ListPostsLazyQueryHookResult = ReturnType<typeof useListPostsLazyQue
 export type ListPostsSuspenseQueryHookResult = ReturnType<typeof useListPostsSuspenseQuery>;
 export type ListPostsQueryResult = Apollo.QueryResult<ListPostsQuery, ListPostsQueryVariables>;
 export const GetPostDocument = gql`
-    query GetPost($id: Int!) {
+    subscription GetPost($id: Int!) {
   posts_by_pk(id: $id) {
     id
     title
@@ -4140,37 +4140,27 @@ export const GetPostDocument = gql`
     `;
 
 /**
- * __useGetPostQuery__
+ * __useGetPostSubscription__
  *
- * To run a query within a React component, call `useGetPostQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPostQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetPostSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useGetPostSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetPostQuery({
+ * const { data, loading, error } = useGetPostSubscription({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useGetPostQuery(baseOptions: Apollo.QueryHookOptions<GetPostQuery, GetPostQueryVariables> & ({ variables: GetPostQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function useGetPostSubscription(baseOptions: Apollo.SubscriptionHookOptions<GetPostSubscription, GetPostSubscriptionVariables> & ({ variables: GetPostSubscriptionVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetPostQuery, GetPostQueryVariables>(GetPostDocument, options);
+        return Apollo.useSubscription<GetPostSubscription, GetPostSubscriptionVariables>(GetPostDocument, options);
       }
-export function useGetPostLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostQuery, GetPostQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetPostQuery, GetPostQueryVariables>(GetPostDocument, options);
-        }
-export function useGetPostSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetPostQuery, GetPostQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetPostQuery, GetPostQueryVariables>(GetPostDocument, options);
-        }
-export type GetPostQueryHookResult = ReturnType<typeof useGetPostQuery>;
-export type GetPostLazyQueryHookResult = ReturnType<typeof useGetPostLazyQuery>;
-export type GetPostSuspenseQueryHookResult = ReturnType<typeof useGetPostSuspenseQuery>;
-export type GetPostQueryResult = Apollo.QueryResult<GetPostQuery, GetPostQueryVariables>;
+export type GetPostSubscriptionHookResult = ReturnType<typeof useGetPostSubscription>;
+export type GetPostSubscriptionResult = Apollo.SubscriptionResult<GetPostSubscription>;
 export const CreatePostDocument = gql`
     mutation CreatePost($title: String!, $body: String!, $user_id: String!) {
   insert_posts_one(object: {title: $title, body: $body, user_id: $user_id}) {
