@@ -1,12 +1,5 @@
 version: "3.6"
 services:
-  postgres:
-    image: postgres:15
-    restart: always
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: postgrespassword
   graphql-engine:
     image: hasura/graphql-engine:v2.39.0
     ports:
@@ -14,9 +7,9 @@ services:
     restart: always
     environment:
       ## postgres database to store Hasura metadata
-      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://neondb_owner:0whzqO6CHYkb@noisy-meadow-10100246.us-west-2.aws.neon.tech/hip-quail-22_db_4965175?options=project%3Dnoisy-meadow-10100246&sslmode=require
       ## this env var can be used to add the above postgres database to Hasura as a data source. this can be removed/updated based on your needs
-      PG_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
+      PG_DATABASE_URL: postgres://neondb_owner:0whzqO6CHYkb@noisy-meadow-10100246.us-west-2.aws.neon.tech/hip-quail-22_db_4965175?options=project%3Dnoisy-meadow-10100246&sslmode=require
       ## enable the console served by server
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
       ## enable debugging mode. It is recommended to disable this in production
@@ -46,5 +39,3 @@ services:
       timeout: 10s
       retries: 5
       start_period: 5s
-volumes:
-  db_data:

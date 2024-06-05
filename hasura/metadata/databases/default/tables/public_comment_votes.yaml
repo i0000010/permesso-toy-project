@@ -1,3 +1,10 @@
 table:
   name: comment_votes
   schema: public
+object_relationships:
+  - name: comment
+    using:
+      foreign_key_constraint_on: comment_id
+  - name: vote
+    using:
+      foreign_key_constraint_on: vote_id

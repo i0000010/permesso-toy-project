@@ -1,0 +1,518 @@
+{
+  "resource_version": 232,
+  "metadata": {
+    "version": 3,
+    "sources": [
+      {
+        "name": "default",
+        "kind": "postgres",
+        "tables": [
+          {
+            "table": {
+              "name": "comment_votes",
+              "schema": "public"
+            },
+            "object_relationships": [
+              {
+                "name": "comment",
+                "using": {
+                  "foreign_key_constraint_on": "comment_id"
+                }
+              },
+              {
+                "name": "vote",
+                "using": {
+                  "foreign_key_constraint_on": "vote_id"
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "comments",
+              "schema": "public"
+            },
+            "object_relationships": [
+              {
+                "name": "comment",
+                "using": {
+                  "foreign_key_constraint_on": "parent_comment_id"
+                }
+              },
+              {
+                "name": "post",
+                "using": {
+                  "foreign_key_constraint_on": "post_id"
+                }
+              },
+              {
+                "name": "user",
+                "using": {
+                  "foreign_key_constraint_on": "user_id"
+                }
+              }
+            ],
+            "array_relationships": [
+              {
+                "name": "comment_votes",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "comment_id",
+                    "table": {
+                      "name": "comment_votes",
+                      "schema": "public"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "comments",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "parent_comment_id",
+                    "table": {
+                      "name": "comments",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {
+                    "user_id": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  },
+                  "columns": [
+                    "body",
+                    "parent_comment_id",
+                    "post_id",
+                    "user_id"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "anonymous",
+                "permission": {
+                  "columns": [
+                    "user_id",
+                    "id",
+                    "post_id",
+                    "created_at",
+                    "accepted_answer",
+                    "body",
+                    "parent_comment_id",
+                    "score"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              },
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "user_id",
+                    "id",
+                    "post_id",
+                    "created_at",
+                    "accepted_answer",
+                    "body",
+                    "parent_comment_id",
+                    "score"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "post_tags",
+              "schema": "public"
+            },
+            "object_relationships": [
+              {
+                "name": "post",
+                "using": {
+                  "foreign_key_constraint_on": "post_id"
+                }
+              },
+              {
+                "name": "tag",
+                "using": {
+                  "foreign_key_constraint_on": "tag_id"
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "post_votes",
+              "schema": "public"
+            },
+            "object_relationships": [
+              {
+                "name": "post",
+                "using": {
+                  "foreign_key_constraint_on": "post_id"
+                }
+              },
+              {
+                "name": "vote",
+                "using": {
+                  "foreign_key_constraint_on": "vote_id"
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {},
+                  "columns": [
+                    "post_id",
+                    "vote_id"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "anonymous",
+                "permission": {
+                  "columns": [
+                    "post_id",
+                    "vote_id"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              },
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "post_id",
+                    "vote_id"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "posts",
+              "schema": "public"
+            },
+            "object_relationships": [
+              {
+                "name": "user",
+                "using": {
+                  "foreign_key_constraint_on": "user_id"
+                }
+              }
+            ],
+            "array_relationships": [
+              {
+                "name": "comments",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "post_id",
+                    "table": {
+                      "name": "comments",
+                      "schema": "public"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "post_tags",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "post_id",
+                    "table": {
+                      "name": "post_tags",
+                      "schema": "public"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "post_votes",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "post_id",
+                    "table": {
+                      "name": "post_votes",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {
+                    "user_id": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  },
+                  "columns": [
+                    "body",
+                    "title",
+                    "user_id"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "anonymous",
+                "permission": {
+                  "columns": [
+                    "title",
+                    "user_id",
+                    "id",
+                    "body",
+                    "created_at",
+                    "score"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              },
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "title",
+                    "user_id",
+                    "id",
+                    "body",
+                    "created_at",
+                    "score"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [],
+                  "filter": {},
+                  "check": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "tags",
+              "schema": "public"
+            },
+            "array_relationships": [
+              {
+                "name": "post_tags",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "tag_id",
+                    "table": {
+                      "name": "post_tags",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {},
+                  "columns": [
+                    "name"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "anonymous",
+                "permission": {
+                  "columns": [
+                    "name",
+                    "id"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "users",
+              "schema": "public"
+            },
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {
+                    "id": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  },
+                  "columns": [
+                    "id",
+                    "username"
+                  ]
+                },
+                "comment": ""
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "anonymous",
+                "permission": {
+                  "columns": [
+                    "id",
+                    "username",
+                    "created_at",
+                    "role",
+                    "reputation"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              },
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "id",
+                    "username",
+                    "created_at",
+                    "role",
+                    "reputation"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "votes",
+              "schema": "public"
+            },
+            "object_relationships": [
+              {
+                "name": "user",
+                "using": {
+                  "foreign_key_constraint_on": "user_id"
+                }
+              }
+            ],
+            "array_relationships": [
+              {
+                "name": "comment_votes",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "vote_id",
+                    "table": {
+                      "name": "comment_votes",
+                      "schema": "public"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "post_votes",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "vote_id",
+                    "table": {
+                      "name": "post_votes",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "anonymous",
+                "permission": {
+                  "columns": [
+                    "user_id",
+                    "id",
+                    "created_at",
+                    "up"
+                  ],
+                  "filter": {}
+                },
+                "comment": ""
+              }
+            ]
+          }
+        ],
+        "configuration": {
+          "connection_info": {
+            "database_url": {
+              "from_env": "PG_DATABASE_URL"
+            },
+            "isolation_level": "read-committed",
+            "use_prepared_statements": false
+          }
+        }
+      }
+    ],
+    "backend_configs": {
+      "dataconnector": {
+        "athena": {
+          "uri": "http://localhost:8081/api/v1/athena"
+        },
+        "mariadb": {
+          "uri": "http://localhost:8081/api/v1/mariadb"
+        },
+        "mongodb": {
+          "uri": "http://localhost:8082"
+        },
+        "mysql8": {
+          "uri": "http://localhost:8081/api/v1/mysql"
+        },
+        "oracle": {
+          "uri": "http://localhost:8081/api/v1/oracle"
+        },
+        "redshift": {
+          "uri": "http://localhost:8081/api/v1/redshift"
+        },
+        "snowflake": {
+          "uri": "http://localhost:8081/api/v1/snowflake"
+        }
+      }
+    }
+  }
+}

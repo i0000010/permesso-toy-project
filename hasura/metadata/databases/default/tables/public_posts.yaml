@@ -1,3 +1,70 @@
 table:
   name: posts
   schema: public
+object_relationships:
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+array_relationships:
+  - name: comments
+    using:
+      foreign_key_constraint_on:
+        column: post_id
+        table:
+          name: comments
+          schema: public
+  - name: post_tags
+    using:
+      foreign_key_constraint_on:
+        column: post_id
+        table:
+          name: post_tags
+          schema: public
+  - name: post_votes
+    using:
+      foreign_key_constraint_on:
+        column: post_id
+        table:
+          name: post_votes
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - body
+        - title
+        - user_id
+    comment: ""
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - title
+        - user_id
+        - id
+        - body
+        - created_at
+        - score
+      filter: {}
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - title
+        - user_id
+        - id
+        - body
+        - created_at
+        - score
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns: []
+      filter: {}
+      check: {}
+    comment: ""

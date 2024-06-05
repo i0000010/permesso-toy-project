@@ -3840,10 +3840,10 @@ export type Votes_Variance_Fields = {
   id?: Maybe<Scalars['Float']['output']>;
 };
 
-export type ListPostsQueryVariables = Exact<{ [key: string]: never; }>;
+export type ListPostsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: number, title: string, body: string, created_at: any, score: number, user: { __typename?: 'users', id: string, username: string, created_at: any, role: string, reputation: number } }> };
+export type ListPostsSubscription = { __typename?: 'subscription_root', posts: Array<{ __typename?: 'posts', id: number, title: string, body: string, created_at: any, score: number, user: { __typename?: 'users', id: string, username: string, created_at: any, role: string, reputation: number } }> };
 
 export type GetPostSubscriptionVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -3888,7 +3888,7 @@ export type CreateUserMutation = { __typename?: 'mutation_root', insert_users_on
 
 
 export const ListPostsDocument = gql`
-    query ListPosts {
+    subscription ListPosts {
   posts {
     id
     title
@@ -3907,36 +3907,26 @@ export const ListPostsDocument = gql`
     `;
 
 /**
- * __useListPostsQuery__
+ * __useListPostsSubscription__
  *
- * To run a query within a React component, call `useListPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useListPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useListPostsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useListPostsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useListPostsQuery({
+ * const { data, loading, error } = useListPostsSubscription({
  *   variables: {
  *   },
  * });
  */
-export function useListPostsQuery(baseOptions?: Apollo.QueryHookOptions<ListPostsQuery, ListPostsQueryVariables>) {
+export function useListPostsSubscription(baseOptions?: Apollo.SubscriptionHookOptions<ListPostsSubscription, ListPostsSubscriptionVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListPostsQuery, ListPostsQueryVariables>(ListPostsDocument, options);
+        return Apollo.useSubscription<ListPostsSubscription, ListPostsSubscriptionVariables>(ListPostsDocument, options);
       }
-export function useListPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListPostsQuery, ListPostsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListPostsQuery, ListPostsQueryVariables>(ListPostsDocument, options);
-        }
-export function useListPostsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ListPostsQuery, ListPostsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<ListPostsQuery, ListPostsQueryVariables>(ListPostsDocument, options);
-        }
-export type ListPostsQueryHookResult = ReturnType<typeof useListPostsQuery>;
-export type ListPostsLazyQueryHookResult = ReturnType<typeof useListPostsLazyQuery>;
-export type ListPostsSuspenseQueryHookResult = ReturnType<typeof useListPostsSuspenseQuery>;
-export type ListPostsQueryResult = Apollo.QueryResult<ListPostsQuery, ListPostsQueryVariables>;
+export type ListPostsSubscriptionHookResult = ReturnType<typeof useListPostsSubscription>;
+export type ListPostsSubscriptionResult = Apollo.SubscriptionResult<ListPostsSubscription>;
 export const GetPostDocument = gql`
     subscription GetPost($id: Int!) {
   posts_by_pk(id: $id) {

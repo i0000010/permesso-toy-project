@@ -18,8 +18,6 @@ import {
 } from "@/lib/firebase/client/auth";
 
 
-const HASURA_GRAPHQL_URL = "https://hip-quail-22.hasura.app/v1/graphql";
-
 function makeClient() {
   const httpLink = new HttpLink({
       // https://studio.apollographql.com/public/spacex-l4uc6p/
@@ -32,7 +30,9 @@ function makeClient() {
     console.log("viewer token: ", token);
   
     if (!token) {
-      return {};
+      return {
+        headers: {},
+      };
     }
   
     return {

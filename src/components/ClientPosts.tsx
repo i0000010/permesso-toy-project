@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { useQuery } from "@apollo/client";
-import { ListPostsQuery, ListPostsDocument } from "@/generated/graphql";
+import { useSubscription } from "@apollo/client";
+import { ListPostsSubscription, ListPostsDocument } from "@/generated/graphql";
 import Link from "next/link";
 import Post from "@/components/Post";
 import clsx from "clsx";
@@ -17,7 +17,7 @@ import clsx from "clsx";
 
 
 const Posts = () => {
-  const { data, loading, error } = useQuery<ListPostsQuery>(ListPostsDocument);
+  const { data, loading, error } = useSubscription<ListPostsSubscription>(ListPostsDocument);
 
   if (loading) return <p>Loading...</p>;
 

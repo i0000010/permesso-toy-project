@@ -1,4 +1,4 @@
-query ListPosts {
+subscription ListPosts {
   posts {
     id
     title
