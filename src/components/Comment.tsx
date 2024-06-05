@@ -48,9 +48,9 @@ const RespondToComment: React.FC<RespondToCommentProps> = ({ user, comment, hand
             >
                 {({ isSubmitting, errors, touched }) => (
                     <Form>
-                        <div className="overflow-hidden rounded-lg border border-gray-300 dark:border-0 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue">
+                        <div className="overflow-hidden rounded-lg border border-gray-300 dark:border-0 shadow-sm focus-within:border-blue focus-within:ring-1 focus-within:ring-blue my-4">
                             <label htmlFor="body" className="sr-only">Body</label>
-                            <Field as="textarea" rows="3" name="body" placeholder="Comment" className="block w-full border-0 pt-2.5 text-md font-medium placeholder:text-gray-400 focus:ring-0 bg-white dark:bg-gray-700" />
+                            <Field as="textarea" rows="3" name="body" placeholder="Comment" className="block w-full border-0 pt-2.5 text-md font-medium placeholder:text-gray-400 focus:ring-0 bg-white dark:bg-gray-600" />
                             <ErrorMessage name="body" component="div" />
                         </div>
                         <div className="flex items-center justify-between space-x-3 border-t border-gray-200 dark:border-0 px-2 py-2 sm:px-3">
@@ -98,7 +98,7 @@ const Comment: React.FC<CommentProps> = ({ comment, children }) => {
                         <button
                             className="text-sm text-blue-500 hover:text-blue-700"
                             onClick={() => setShowForm(!showForm)}
-                        >Respond
+                        >{showForm? "Close": "Respond"}
                         </button>
                     </div>
                     {showForm && user && <RespondToComment user={user} comment={comment} handleSubmit={setShowForm} />}
