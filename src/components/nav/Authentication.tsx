@@ -6,11 +6,11 @@
  */
 'use client';
 
-import { UserAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
 const Authentication: React.FC = () => {
-    const { user, logIn, logOut } = UserAuth();
+    const { user, logIn, logOut } = useAuth();
     const router = useRouter();
 
     return (

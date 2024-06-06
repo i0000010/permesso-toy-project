@@ -1,19 +1,16 @@
 "use client";
 import React from "react";
-import { useQuery, useMutation } from "@apollo/client";
-import { GetPostQuery, GetPostDocument, CommentOnPostMutation, CommentOnPostDocument, CommentOnPostMutationVariables } from "@/generated/graphql";
-import clsx from "clsx";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+import { GetPostSubscription } from "@/generated/graphql";
+
 import Comment from "@/components/Comment";
 
 
 interface CommentsProps {
-    comments: NonNullable<GetPostQuery["posts_by_pk"]>["comments"];
+    comments: NonNullable<GetPostSubscription["posts_by_pk"]>["comments"];
 }
 
 
-function markupComments(comments: NonNullable<GetPostQuery["posts_by_pk"]>["comments"]): React.ReactNode[] {
+function markupComments(comments: NonNullable<GetPostSubscription["posts_by_pk"]>["comments"]): React.ReactNode[] {
 
     interface Thread {
       [key: number]: React.ReactNode[];

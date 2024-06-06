@@ -2,7 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
-import { UserAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import clsx from 'clsx';
 
@@ -12,7 +12,7 @@ interface AuthMenuProps {
 
 const AuthMenu: React.FC<AuthMenuProps> = ({ active }) => {
 
-    const { user, logIn, logOut } = UserAuth();
+    const { user, logIn, logOut } = useAuth();
     const router = useRouter();
 
     return (

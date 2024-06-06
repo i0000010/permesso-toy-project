@@ -3,6 +3,7 @@
 import {
   ApolloLink,
   HttpLink,
+  split
 } from "@apollo/client";
 import { setContext } from '@apollo/client/link/context';
 import {
@@ -13,6 +14,7 @@ import {
 } from "@apollo/experimental-nextjs-app-support/ssr";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { SubscriptionClient } from 'subscriptions-transport-ws'
+import { getMainDefinition } from '@apollo/client/utilities';
 import { 
   getViewerToken 
 } from "@/lib/firebase/client/auth";
@@ -50,6 +52,12 @@ function makeClient() {
         reconnect: true,
         connectionParams: async () => {
           const token = await getViewerToken()
+
+          if (!token) {
+            return {
+              headers: {},
+            }
+          }
           return {
             headers: {
               authorization: token ? `Bearer ${token}` : '',
@@ -60,6 +68,19 @@ function makeClient() {
     )
   }
 
+  // Use the split function to send data to each link
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  createWSLink(),
+  httpLink
+);
+
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache(),
     link:
@@ -69,9 +90,9 @@ function makeClient() {
               stripDefer: true,
             }),
             authLink,
-            httpLink,
+            splitLink,
           ])
-        : ApolloLink.from([createWSLink(), authLink, httpLink]),
+        : ApolloLink.from([authLink, splitLink]),
         // : createWSLink(),
   });
 }

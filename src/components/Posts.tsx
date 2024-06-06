@@ -1,12 +1,12 @@
 import 'server-only';
 import React from 'react';
 import { getClient } from '@/lib/apollo/server';
-import { ListPostsQuery, ListPostsDocument } from '@/generated/graphql';
+import { ListPostsSubscription, ListPostsDocument } from '@/generated/graphql';
 
 
 const Posts = async () => {
 
-    const data = await getClient().query<ListPostsQuery>({
+    const data = await getClient().query<ListPostsSubscription>({
         query: ListPostsDocument,
         fetchPolicy: 'no-cache',
     });

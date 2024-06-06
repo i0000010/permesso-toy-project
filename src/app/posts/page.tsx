@@ -6,15 +6,15 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/navigation'
 import { useMutation } from '@apollo/client'
 import { CreatePostMutation, CreatePostMutationVariables, CreatePostDocument } from '@/generated/graphql'
-import { UserAuth } from '@/context/AuthContext';
+import { useViewer } from '@/context/ViewerContext';
 import clsx from 'clsx';
 
 export default function PostPage() {
   const router = useRouter();
-  const { user } = UserAuth();
+  const { viewer } = useViewer();
   const [createPost] = useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument);
 
-  if (!user) {
+  if (!viewer) {
     return (
       <div>
         <h1>Not authenticated</h1>
@@ -41,7 +41,7 @@ export default function PostPage() {
                 variables: {
                   title: values.title,
                   body: values.body,
-                  user_id: user.uid,
+                  profile_id: viewer!.id,
                 }
               });
               setSubmitting(false);

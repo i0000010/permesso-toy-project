@@ -4,8 +4,11 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import clsx from 'clsx';
 import { useMutation } from '@apollo/client';
-import { CreateUserMutation, CreateUserMutationVariables, CreateUserDocument } from '@/generated/graphql';
-import { UserAuth } from "@/context/AuthContext";
+import { CreateProfileMutation, CreateProfileMutationVariables, CreateProfileDocument } from '@/generated/graphql';
+import { useAuth } from "@/context/AuthContext";
+import { useViewer } from "@/context/ViewerContext";
+import { Viewer } from "@/context/ViewerContext";
+import { set } from 'firebase/database';
 
 
 const validationSchema = Yup.object().shape({
@@ -14,9 +17,13 @@ const validationSchema = Yup.object().shape({
 
 const ProfileForm = () => {
 
-  const { user } = UserAuth();
-  console.log('user: ', user);
-  const [createUser] = useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument);
+  const { setViewer } = useViewer();
+  const { user } = useAuth();
+  const [createProfile] = useMutation<CreateProfileMutation, CreateProfileMutationVariables>(CreateProfileDocument);
+
+  if (!user) {
+    return <p>Not logged in</p>;
+  }
 
   return (
     <Formik
@@ -24,17 +31,15 @@ const ProfileForm = () => {
         username: "",
       }}
       validationSchema={validationSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
-        console.log('id: ', user?.uid);
-        console.log('username: ', values.username);
-        createUser({
+      onSubmit={async (values, { setSubmitting }) => {
+        console.log('user: ', user)
+        const response = await createProfile({
           variables: {
-            id: user?.uid,
+            user_id: user!.uid,
             username: values.username,
           }
         });
-
+        setViewer(response.data?.insert_profiles_one as Viewer);
         setSubmitting(false);
       }}
     >

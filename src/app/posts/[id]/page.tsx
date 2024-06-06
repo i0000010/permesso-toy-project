@@ -5,7 +5,7 @@ import { GetPostSubscription, GetPostDocument, CommentOnPostMutation, CommentOnP
 import Post from "@/components/Post";
 import clsx from "clsx";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { UserAuth } from "@/context/AuthContext";
+import { useViewer } from "@/context/ViewerContext";
 import * as Yup from 'yup';
 import Comments from "@/components/Comments";
 
@@ -16,6 +16,8 @@ interface PostPageProps {
 }
 
 const PostPage: React.FC<PostPageProps> = ({ params }) => {
+
+    const { viewer } = useViewer();
 
     const { data, loading, error } = useSubscription<GetPostSubscription>(GetPostDocument, {
         variables: {
@@ -30,8 +32,6 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
     if (error) return <p>Error: {error.message}</p>;
 
     if (!data || !data.posts_by_pk) return <p>No data</p>;
-
-    const { user } = UserAuth();
 
     return (
         <main className="p-4">
@@ -51,7 +51,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                             variables: {
                                 body: values.body,
                                 post_id: data.posts_by_pk!.id,
-                                user_id: user!.uid
+                                profile_id: viewer!.id,
                             }
                         });
                         setSubmitting(false);

@@ -6,20 +6,20 @@ import type { GetPostSubscription } from '@/generated/graphql';
 import { CommentOnPostMutation, CommentOnPostDocument, CommentOnPostMutationVariables } from "@/generated/graphql";
 
 // import firebase user type
-import type { User } from 'firebase/auth';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { UserAuth } from "@/context/AuthContext";
+import { useViewer } from "@/context/ViewerContext";
+import type { Viewer } from "@/context/ViewerContext";
 import * as Yup from 'yup';
 import clsx from 'clsx';
 import { Dispatch, SetStateAction } from 'react';
 
 interface RespondToCommentProps {
-    user: User;
+    viewer: Viewer;
     comment: NonNullable<GetPostSubscription["posts_by_pk"]>["comments"][0];
     handleSubmit: Dispatch<SetStateAction<boolean>>;
 };
 
-const RespondToComment: React.FC<RespondToCommentProps> = ({ user, comment, handleSubmit }) => {
+const RespondToComment: React.FC<RespondToCommentProps> = ({ viewer, comment, handleSubmit }) => {
 
     const [createComment] = useMutation<CommentOnPostMutation, CommentOnPostMutationVariables>(CommentOnPostDocument);
 
@@ -39,7 +39,7 @@ const RespondToComment: React.FC<RespondToCommentProps> = ({ user, comment, hand
                             body: values.body,
                             post_id: comment.post_id,
                             parent_comment_id: comment.id,
-                            user_id: user.uid
+                            profile_id: viewer.id,
                         }
                     });
                     setSubmitting(false);
@@ -76,7 +76,7 @@ export interface CommentProps {
 
 const Comment: React.FC<CommentProps> = ({ comment, children }) => {
 
-    const { user } = UserAuth();
+    const { viewer } = useViewer();
 
     const [showForm, setShowForm] = useState(false);
 
@@ -86,7 +86,7 @@ const Comment: React.FC<CommentProps> = ({ comment, children }) => {
                 <div className="flex space-x-3">
                     <div className="min-w-0 flex-1">
                         <p className="text-sm font-semibold">
-                            {comment.user?.username}
+                            {comment.profile?.username}
                         </p>
                         <p>{comment.created_at.slice(0, 10)}</p>
                     </div>
@@ -101,7 +101,7 @@ const Comment: React.FC<CommentProps> = ({ comment, children }) => {
                         >{showForm? "Close": "Respond"}
                         </button>
                     </div>
-                    {showForm && user && <RespondToComment user={user} comment={comment} handleSubmit={setShowForm} />}
+                    {showForm && viewer && <RespondToComment viewer={viewer} comment={comment} handleSubmit={setShowForm} />}
 
 
                 </div>

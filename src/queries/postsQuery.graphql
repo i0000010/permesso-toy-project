@@ -5,11 +5,9 @@ subscription ListPosts {
     body
     created_at
     score
-    user {
+    profile {
       id
       username
-      created_at
-      role
       reputation
     }
   }
@@ -22,7 +20,7 @@ subscription GetPost($id: Int!) {
     body
     created_at
     score
-    user {
+    profile {
       id
       username
       reputation
@@ -35,7 +33,7 @@ subscription GetPost($id: Int!) {
       score
       created_at
       accepted_answer
-      user {
+      profile {
         id
         username
         reputation
@@ -44,15 +42,15 @@ subscription GetPost($id: Int!) {
   }
 }
 
-mutation CreatePost($title: String!, $body: String!, $user_id: String!) {
-    insert_posts_one(object: {title: $title, body: $body, user_id: $user_id}) {
+mutation CreatePost($title: String!, $body: String!, $profile_id: Int!) {
+    insert_posts_one(object: {title: $title, body: $body, profile_id: $profile_id}) {
         title
         body
     }
 }
 
-mutation CommentOnPost($post_id: Int!, $body: String!, $user_id: String!, $parent_comment_id: Int) {
-    insert_comments_one(object: {post_id: $post_id, body: $body, user_id: $user_id, parent_comment_id: $parent_comment_id}) {
+mutation CommentOnPost($post_id: Int!, $body: String!, $profile_id: Int!, $parent_comment_id: Int) {
+    insert_comments_one(object: {post_id: $post_id, body: $body, profile_id: $profile_id, parent_comment_id: $parent_comment_id}) {
         body
     }
 }

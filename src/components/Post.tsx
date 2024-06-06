@@ -1,10 +1,10 @@
 'use client';
 import React from 'react';
-import { GetPostQuery, ListPostsQuery } from "@/generated/graphql";
+import { GetPostSubscription } from "@/generated/graphql";
 import Link from "next/link";
 
 interface PostProps {
-    post: NonNullable<GetPostQuery["posts_by_pk"]> | ListPostsQuery["posts"][0];
+    post: NonNullable<GetPostSubscription["posts_by_pk"]>;
 }
 
 const Post: React.FC<PostProps> = ({ post }) => {
@@ -15,7 +15,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
           <div className="min-w-0 flex-1">
             <p className="text-sm font-semibold">
               <Link href="#" className="hover:underline">
-                {post.user.username}
+                {post.profile.username}
               </Link>
             </p>
             <p>{post.created_at.slice(0, 10)}</p>

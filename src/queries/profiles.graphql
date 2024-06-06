@@ -1,0 +1,15 @@
+query GetProfileByUserId($user_id: String!) {
+  profiles(distinct_on: user_id, limit: 1, where: { user_id: { _eq: $user_id} }) {
+    id
+    user_id
+    username
+  }
+}
+
+mutation CreateProfile($username: String!, $user_id: String!) {
+  insert_profiles_one(object: {username: $username, user_id: $user_id}) {
+    id
+    username
+    user_id
+  }
+}

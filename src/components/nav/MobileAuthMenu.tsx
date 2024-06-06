@@ -3,7 +3,7 @@
 import React from "react"
 import Link from "next/link"
 import { UserIcon } from "@heroicons/react/24/outline";
-import { UserAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import ThemeSelector from "@/components/nav/ThemeSelector";
 import { useCookies } from 'next-client-cookies';
@@ -11,7 +11,7 @@ import clsx from 'clsx';
 
 const MobileAuthMenu: React.FC = () => {
 
-    const { user, logIn, logOut } = UserAuth();
+    const { user, logIn, logOut } = useAuth();
     const router = useRouter();
     const cookies = useCookies();
     const theme = cookies.get('x-theme') || 'light';

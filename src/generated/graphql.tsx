@@ -15,6 +15,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  interval: { input: any; output: any; }
   timestamptz: { input: any; output: any; }
 };
 
@@ -413,11 +414,11 @@ export type Comments = {
   /** An object relationship */
   post: Posts;
   post_id: Scalars['Int']['output'];
+  /** An object relationship */
+  profile: Profiles;
+  profile_id: Scalars['Int']['output'];
   /** sum of up votes - sum of down votes */
   score: Scalars['Int']['output'];
-  /** An object relationship */
-  user: Users;
-  user_id: Scalars['String']['output'];
 };
 
 
@@ -546,6 +547,7 @@ export type Comments_Avg_Fields = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: Maybe<Scalars['Float']['output']>;
   post_id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
   /** sum of up votes - sum of down votes */
   score?: Maybe<Scalars['Float']['output']>;
 };
@@ -556,6 +558,7 @@ export type Comments_Avg_Order_By = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: InputMaybe<Order_By>;
   post_id?: InputMaybe<Order_By>;
+  profile_id?: InputMaybe<Order_By>;
   /** sum of up votes - sum of down votes */
   score?: InputMaybe<Order_By>;
 };
@@ -577,9 +580,9 @@ export type Comments_Bool_Exp = {
   parent_comment_id?: InputMaybe<Int_Comparison_Exp>;
   post?: InputMaybe<Posts_Bool_Exp>;
   post_id?: InputMaybe<Int_Comparison_Exp>;
+  profile?: InputMaybe<Profiles_Bool_Exp>;
+  profile_id?: InputMaybe<Int_Comparison_Exp>;
   score?: InputMaybe<Int_Comparison_Exp>;
-  user?: InputMaybe<Users_Bool_Exp>;
-  user_id?: InputMaybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "comments" */
@@ -594,6 +597,7 @@ export type Comments_Inc_Input = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: InputMaybe<Scalars['Int']['input']>;
   post_id?: InputMaybe<Scalars['Int']['input']>;
+  profile_id?: InputMaybe<Scalars['Int']['input']>;
   /** sum of up votes - sum of down votes */
   score?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -613,10 +617,10 @@ export type Comments_Insert_Input = {
   parent_comment_id?: InputMaybe<Scalars['Int']['input']>;
   post?: InputMaybe<Posts_Obj_Rel_Insert_Input>;
   post_id?: InputMaybe<Scalars['Int']['input']>;
+  profile?: InputMaybe<Profiles_Obj_Rel_Insert_Input>;
+  profile_id?: InputMaybe<Scalars['Int']['input']>;
   /** sum of up votes - sum of down votes */
   score?: InputMaybe<Scalars['Int']['input']>;
-  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
-  user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate max on columns */
@@ -629,9 +633,9 @@ export type Comments_Max_Fields = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: Maybe<Scalars['Int']['output']>;
   post_id?: Maybe<Scalars['Int']['output']>;
+  profile_id?: Maybe<Scalars['Int']['output']>;
   /** sum of up votes - sum of down votes */
   score?: Maybe<Scalars['Int']['output']>;
-  user_id?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by max() on columns of table "comments" */
@@ -643,9 +647,9 @@ export type Comments_Max_Order_By = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: InputMaybe<Order_By>;
   post_id?: InputMaybe<Order_By>;
+  profile_id?: InputMaybe<Order_By>;
   /** sum of up votes - sum of down votes */
   score?: InputMaybe<Order_By>;
-  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -658,9 +662,9 @@ export type Comments_Min_Fields = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: Maybe<Scalars['Int']['output']>;
   post_id?: Maybe<Scalars['Int']['output']>;
+  profile_id?: Maybe<Scalars['Int']['output']>;
   /** sum of up votes - sum of down votes */
   score?: Maybe<Scalars['Int']['output']>;
-  user_id?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by min() on columns of table "comments" */
@@ -672,9 +676,9 @@ export type Comments_Min_Order_By = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: InputMaybe<Order_By>;
   post_id?: InputMaybe<Order_By>;
+  profile_id?: InputMaybe<Order_By>;
   /** sum of up votes - sum of down votes */
   score?: InputMaybe<Order_By>;
-  user_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "comments" */
@@ -712,9 +716,9 @@ export type Comments_Order_By = {
   parent_comment_id?: InputMaybe<Order_By>;
   post?: InputMaybe<Posts_Order_By>;
   post_id?: InputMaybe<Order_By>;
+  profile?: InputMaybe<Profiles_Order_By>;
+  profile_id?: InputMaybe<Order_By>;
   score?: InputMaybe<Order_By>;
-  user?: InputMaybe<Users_Order_By>;
-  user_id?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: comments */
@@ -737,9 +741,9 @@ export enum Comments_Select_Column {
   /** column name */
   PostId = 'post_id',
   /** column name */
-  Score = 'score',
+  ProfileId = 'profile_id',
   /** column name */
-  UserId = 'user_id'
+  Score = 'score'
 }
 
 /** select "comments_aggregate_bool_exp_bool_and_arguments_columns" columns of table "comments" */
@@ -765,9 +769,9 @@ export type Comments_Set_Input = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: InputMaybe<Scalars['Int']['input']>;
   post_id?: InputMaybe<Scalars['Int']['input']>;
+  profile_id?: InputMaybe<Scalars['Int']['input']>;
   /** sum of up votes - sum of down votes */
   score?: InputMaybe<Scalars['Int']['input']>;
-  user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate stddev on columns */
@@ -777,6 +781,7 @@ export type Comments_Stddev_Fields = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: Maybe<Scalars['Float']['output']>;
   post_id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
   /** sum of up votes - sum of down votes */
   score?: Maybe<Scalars['Float']['output']>;
 };
@@ -787,6 +792,7 @@ export type Comments_Stddev_Order_By = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: InputMaybe<Order_By>;
   post_id?: InputMaybe<Order_By>;
+  profile_id?: InputMaybe<Order_By>;
   /** sum of up votes - sum of down votes */
   score?: InputMaybe<Order_By>;
 };
@@ -798,6 +804,7 @@ export type Comments_Stddev_Pop_Fields = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: Maybe<Scalars['Float']['output']>;
   post_id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
   /** sum of up votes - sum of down votes */
   score?: Maybe<Scalars['Float']['output']>;
 };
@@ -808,6 +815,7 @@ export type Comments_Stddev_Pop_Order_By = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: InputMaybe<Order_By>;
   post_id?: InputMaybe<Order_By>;
+  profile_id?: InputMaybe<Order_By>;
   /** sum of up votes - sum of down votes */
   score?: InputMaybe<Order_By>;
 };
@@ -819,6 +827,7 @@ export type Comments_Stddev_Samp_Fields = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: Maybe<Scalars['Float']['output']>;
   post_id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
   /** sum of up votes - sum of down votes */
   score?: Maybe<Scalars['Float']['output']>;
 };
@@ -829,6 +838,7 @@ export type Comments_Stddev_Samp_Order_By = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: InputMaybe<Order_By>;
   post_id?: InputMaybe<Order_By>;
+  profile_id?: InputMaybe<Order_By>;
   /** sum of up votes - sum of down votes */
   score?: InputMaybe<Order_By>;
 };
@@ -852,9 +862,9 @@ export type Comments_Stream_Cursor_Value_Input = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: InputMaybe<Scalars['Int']['input']>;
   post_id?: InputMaybe<Scalars['Int']['input']>;
+  profile_id?: InputMaybe<Scalars['Int']['input']>;
   /** sum of up votes - sum of down votes */
   score?: InputMaybe<Scalars['Int']['input']>;
-  user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate sum on columns */
@@ -864,6 +874,7 @@ export type Comments_Sum_Fields = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: Maybe<Scalars['Int']['output']>;
   post_id?: Maybe<Scalars['Int']['output']>;
+  profile_id?: Maybe<Scalars['Int']['output']>;
   /** sum of up votes - sum of down votes */
   score?: Maybe<Scalars['Int']['output']>;
 };
@@ -874,6 +885,7 @@ export type Comments_Sum_Order_By = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: InputMaybe<Order_By>;
   post_id?: InputMaybe<Order_By>;
+  profile_id?: InputMaybe<Order_By>;
   /** sum of up votes - sum of down votes */
   score?: InputMaybe<Order_By>;
 };
@@ -893,9 +905,9 @@ export enum Comments_Update_Column {
   /** column name */
   PostId = 'post_id',
   /** column name */
-  Score = 'score',
+  ProfileId = 'profile_id',
   /** column name */
-  UserId = 'user_id'
+  Score = 'score'
 }
 
 export type Comments_Updates = {
@@ -914,6 +926,7 @@ export type Comments_Var_Pop_Fields = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: Maybe<Scalars['Float']['output']>;
   post_id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
   /** sum of up votes - sum of down votes */
   score?: Maybe<Scalars['Float']['output']>;
 };
@@ -924,6 +937,7 @@ export type Comments_Var_Pop_Order_By = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: InputMaybe<Order_By>;
   post_id?: InputMaybe<Order_By>;
+  profile_id?: InputMaybe<Order_By>;
   /** sum of up votes - sum of down votes */
   score?: InputMaybe<Order_By>;
 };
@@ -935,6 +949,7 @@ export type Comments_Var_Samp_Fields = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: Maybe<Scalars['Float']['output']>;
   post_id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
   /** sum of up votes - sum of down votes */
   score?: Maybe<Scalars['Float']['output']>;
 };
@@ -945,6 +960,7 @@ export type Comments_Var_Samp_Order_By = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: InputMaybe<Order_By>;
   post_id?: InputMaybe<Order_By>;
+  profile_id?: InputMaybe<Order_By>;
   /** sum of up votes - sum of down votes */
   score?: InputMaybe<Order_By>;
 };
@@ -956,6 +972,7 @@ export type Comments_Variance_Fields = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: Maybe<Scalars['Float']['output']>;
   post_id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
   /** sum of up votes - sum of down votes */
   score?: Maybe<Scalars['Float']['output']>;
 };
@@ -966,6 +983,7 @@ export type Comments_Variance_Order_By = {
   /** pk of a comment on a post this was made in response to. */
   parent_comment_id?: InputMaybe<Order_By>;
   post_id?: InputMaybe<Order_By>;
+  profile_id?: InputMaybe<Order_By>;
   /** sum of up votes - sum of down votes */
   score?: InputMaybe<Order_By>;
 };
@@ -977,6 +995,19 @@ export enum Cursor_Ordering {
   /** descending ordering of the cursor */
   Desc = 'DESC'
 }
+
+/** Boolean expression to compare columns of type "interval". All fields are combined with logical 'AND'. */
+export type Interval_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['interval']['input']>;
+  _gt?: InputMaybe<Scalars['interval']['input']>;
+  _gte?: InputMaybe<Scalars['interval']['input']>;
+  _in?: InputMaybe<Array<Scalars['interval']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['interval']['input']>;
+  _lte?: InputMaybe<Scalars['interval']['input']>;
+  _neq?: InputMaybe<Scalars['interval']['input']>;
+  _nin?: InputMaybe<Array<Scalars['interval']['input']>>;
+};
 
 /** mutation root */
 export type Mutation_Root = {
@@ -1001,14 +1032,14 @@ export type Mutation_Root = {
   delete_posts?: Maybe<Posts_Mutation_Response>;
   /** delete single row from the table: "posts" */
   delete_posts_by_pk?: Maybe<Posts>;
+  /** delete data from the table: "profiles" */
+  delete_profiles?: Maybe<Profiles_Mutation_Response>;
+  /** delete single row from the table: "profiles" */
+  delete_profiles_by_pk?: Maybe<Profiles>;
   /** delete data from the table: "tags" */
   delete_tags?: Maybe<Tags_Mutation_Response>;
   /** delete single row from the table: "tags" */
   delete_tags_by_pk?: Maybe<Tags>;
-  /** delete data from the table: "users" */
-  delete_users?: Maybe<Users_Mutation_Response>;
-  /** delete single row from the table: "users" */
-  delete_users_by_pk?: Maybe<Users>;
   /** delete data from the table: "votes" */
   delete_votes?: Maybe<Votes_Mutation_Response>;
   /** delete single row from the table: "votes" */
@@ -1033,14 +1064,14 @@ export type Mutation_Root = {
   insert_posts?: Maybe<Posts_Mutation_Response>;
   /** insert a single row into the table: "posts" */
   insert_posts_one?: Maybe<Posts>;
+  /** insert data into the table: "profiles" */
+  insert_profiles?: Maybe<Profiles_Mutation_Response>;
+  /** insert a single row into the table: "profiles" */
+  insert_profiles_one?: Maybe<Profiles>;
   /** insert data into the table: "tags" */
   insert_tags?: Maybe<Tags_Mutation_Response>;
   /** insert a single row into the table: "tags" */
   insert_tags_one?: Maybe<Tags>;
-  /** insert data into the table: "users" */
-  insert_users?: Maybe<Users_Mutation_Response>;
-  /** insert a single row into the table: "users" */
-  insert_users_one?: Maybe<Users>;
   /** insert data into the table: "votes" */
   insert_votes?: Maybe<Votes_Mutation_Response>;
   /** insert a single row into the table: "votes" */
@@ -1075,18 +1106,18 @@ export type Mutation_Root = {
   update_posts_by_pk?: Maybe<Posts>;
   /** update multiples rows of table: "posts" */
   update_posts_many?: Maybe<Array<Maybe<Posts_Mutation_Response>>>;
+  /** update data of the table: "profiles" */
+  update_profiles?: Maybe<Profiles_Mutation_Response>;
+  /** update single row of the table: "profiles" */
+  update_profiles_by_pk?: Maybe<Profiles>;
+  /** update multiples rows of table: "profiles" */
+  update_profiles_many?: Maybe<Array<Maybe<Profiles_Mutation_Response>>>;
   /** update data of the table: "tags" */
   update_tags?: Maybe<Tags_Mutation_Response>;
   /** update single row of the table: "tags" */
   update_tags_by_pk?: Maybe<Tags>;
   /** update multiples rows of table: "tags" */
   update_tags_many?: Maybe<Array<Maybe<Tags_Mutation_Response>>>;
-  /** update data of the table: "users" */
-  update_users?: Maybe<Users_Mutation_Response>;
-  /** update single row of the table: "users" */
-  update_users_by_pk?: Maybe<Users>;
-  /** update multiples rows of table: "users" */
-  update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
   /** update data of the table: "votes" */
   update_votes?: Maybe<Votes_Mutation_Response>;
   /** update single row of the table: "votes" */
@@ -1160,6 +1191,18 @@ export type Mutation_RootDelete_Posts_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_ProfilesArgs = {
+  where: Profiles_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Profiles_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_TagsArgs = {
   where: Tags_Bool_Exp;
 };
@@ -1168,18 +1211,6 @@ export type Mutation_RootDelete_TagsArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Tags_By_PkArgs = {
   id: Scalars['Int']['input'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_UsersArgs = {
-  where: Users_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Users_By_PkArgs = {
-  id: Scalars['String']['input'];
 };
 
 
@@ -1266,6 +1297,20 @@ export type Mutation_RootInsert_Posts_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_ProfilesArgs = {
+  objects: Array<Profiles_Insert_Input>;
+  on_conflict?: InputMaybe<Profiles_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Profiles_OneArgs = {
+  object: Profiles_Insert_Input;
+  on_conflict?: InputMaybe<Profiles_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_TagsArgs = {
   objects: Array<Tags_Insert_Input>;
   on_conflict?: InputMaybe<Tags_On_Conflict>;
@@ -1276,20 +1321,6 @@ export type Mutation_RootInsert_TagsArgs = {
 export type Mutation_RootInsert_Tags_OneArgs = {
   object: Tags_Insert_Input;
   on_conflict?: InputMaybe<Tags_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_UsersArgs = {
-  objects: Array<Users_Insert_Input>;
-  on_conflict?: InputMaybe<Users_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Users_OneArgs = {
-  object: Users_Insert_Input;
-  on_conflict?: InputMaybe<Users_On_Conflict>;
 };
 
 
@@ -1418,6 +1449,28 @@ export type Mutation_RootUpdate_Posts_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_ProfilesArgs = {
+  _inc?: InputMaybe<Profiles_Inc_Input>;
+  _set?: InputMaybe<Profiles_Set_Input>;
+  where: Profiles_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Profiles_By_PkArgs = {
+  _inc?: InputMaybe<Profiles_Inc_Input>;
+  _set?: InputMaybe<Profiles_Set_Input>;
+  pk_columns: Profiles_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Profiles_ManyArgs = {
+  updates: Array<Profiles_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_TagsArgs = {
   _inc?: InputMaybe<Tags_Inc_Input>;
   _set?: InputMaybe<Tags_Set_Input>;
@@ -1436,28 +1489,6 @@ export type Mutation_RootUpdate_Tags_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Tags_ManyArgs = {
   updates: Array<Tags_Updates>;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_UsersArgs = {
-  _inc?: InputMaybe<Users_Inc_Input>;
-  _set?: InputMaybe<Users_Set_Input>;
-  where: Users_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Users_By_PkArgs = {
-  _inc?: InputMaybe<Users_Inc_Input>;
-  _set?: InputMaybe<Users_Set_Input>;
-  pk_columns: Users_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Users_ManyArgs = {
-  updates: Array<Users_Updates>;
 };
 
 
@@ -2140,12 +2171,12 @@ export type Posts = {
   post_votes: Array<Post_Votes>;
   /** An aggregate relationship */
   post_votes_aggregate: Post_Votes_Aggregate;
+  /** An object relationship */
+  profile: Profiles;
+  profile_id: Scalars['Int']['output'];
   /** sum of upvotes - sum of down votes on post */
   score: Scalars['Int']['output'];
   title: Scalars['String']['output'];
-  /** An object relationship */
-  user: Users;
-  user_id: Scalars['String']['output'];
 };
 
 
@@ -2242,6 +2273,7 @@ export type Posts_Aggregate_FieldsCountArgs = {
 export type Posts_Avg_Fields = {
   __typename?: 'posts_avg_fields';
   id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
   /** sum of upvotes - sum of down votes on post */
   score?: Maybe<Scalars['Float']['output']>;
 };
@@ -2260,10 +2292,10 @@ export type Posts_Bool_Exp = {
   post_tags_aggregate?: InputMaybe<Post_Tags_Aggregate_Bool_Exp>;
   post_votes?: InputMaybe<Post_Votes_Bool_Exp>;
   post_votes_aggregate?: InputMaybe<Post_Votes_Aggregate_Bool_Exp>;
+  profile?: InputMaybe<Profiles_Bool_Exp>;
+  profile_id?: InputMaybe<Int_Comparison_Exp>;
   score?: InputMaybe<Int_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
-  user?: InputMaybe<Users_Bool_Exp>;
-  user_id?: InputMaybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "posts" */
@@ -2275,6 +2307,7 @@ export enum Posts_Constraint {
 /** input type for incrementing numeric columns in table "posts" */
 export type Posts_Inc_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
+  profile_id?: InputMaybe<Scalars['Int']['input']>;
   /** sum of upvotes - sum of down votes on post */
   score?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -2287,11 +2320,11 @@ export type Posts_Insert_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   post_tags?: InputMaybe<Post_Tags_Arr_Rel_Insert_Input>;
   post_votes?: InputMaybe<Post_Votes_Arr_Rel_Insert_Input>;
+  profile?: InputMaybe<Profiles_Obj_Rel_Insert_Input>;
+  profile_id?: InputMaybe<Scalars['Int']['input']>;
   /** sum of upvotes - sum of down votes on post */
   score?: InputMaybe<Scalars['Int']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
-  user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate max on columns */
@@ -2300,10 +2333,10 @@ export type Posts_Max_Fields = {
   body?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
+  profile_id?: Maybe<Scalars['Int']['output']>;
   /** sum of upvotes - sum of down votes on post */
   score?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
-  user_id?: Maybe<Scalars['String']['output']>;
 };
 
 /** aggregate min on columns */
@@ -2312,10 +2345,10 @@ export type Posts_Min_Fields = {
   body?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
+  profile_id?: Maybe<Scalars['Int']['output']>;
   /** sum of upvotes - sum of down votes on post */
   score?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
-  user_id?: Maybe<Scalars['String']['output']>;
 };
 
 /** response of any mutation on the table "posts" */
@@ -2349,10 +2382,10 @@ export type Posts_Order_By = {
   id?: InputMaybe<Order_By>;
   post_tags_aggregate?: InputMaybe<Post_Tags_Aggregate_Order_By>;
   post_votes_aggregate?: InputMaybe<Post_Votes_Aggregate_Order_By>;
+  profile?: InputMaybe<Profiles_Order_By>;
+  profile_id?: InputMaybe<Order_By>;
   score?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
-  user?: InputMaybe<Users_Order_By>;
-  user_id?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: posts */
@@ -2369,11 +2402,11 @@ export enum Posts_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  ProfileId = 'profile_id',
+  /** column name */
   Score = 'score',
   /** column name */
-  Title = 'title',
-  /** column name */
-  UserId = 'user_id'
+  Title = 'title'
 }
 
 /** input type for updating data in table "posts" */
@@ -2381,16 +2414,17 @@ export type Posts_Set_Input = {
   body?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  profile_id?: InputMaybe<Scalars['Int']['input']>;
   /** sum of upvotes - sum of down votes on post */
   score?: InputMaybe<Scalars['Int']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate stddev on columns */
 export type Posts_Stddev_Fields = {
   __typename?: 'posts_stddev_fields';
   id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
   /** sum of upvotes - sum of down votes on post */
   score?: Maybe<Scalars['Float']['output']>;
 };
@@ -2399,6 +2433,7 @@ export type Posts_Stddev_Fields = {
 export type Posts_Stddev_Pop_Fields = {
   __typename?: 'posts_stddev_pop_fields';
   id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
   /** sum of upvotes - sum of down votes on post */
   score?: Maybe<Scalars['Float']['output']>;
 };
@@ -2407,6 +2442,7 @@ export type Posts_Stddev_Pop_Fields = {
 export type Posts_Stddev_Samp_Fields = {
   __typename?: 'posts_stddev_samp_fields';
   id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
   /** sum of upvotes - sum of down votes on post */
   score?: Maybe<Scalars['Float']['output']>;
 };
@@ -2424,16 +2460,17 @@ export type Posts_Stream_Cursor_Value_Input = {
   body?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  profile_id?: InputMaybe<Scalars['Int']['input']>;
   /** sum of upvotes - sum of down votes on post */
   score?: InputMaybe<Scalars['Int']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate sum on columns */
 export type Posts_Sum_Fields = {
   __typename?: 'posts_sum_fields';
   id?: Maybe<Scalars['Int']['output']>;
+  profile_id?: Maybe<Scalars['Int']['output']>;
   /** sum of upvotes - sum of down votes on post */
   score?: Maybe<Scalars['Int']['output']>;
 };
@@ -2447,11 +2484,11 @@ export enum Posts_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  ProfileId = 'profile_id',
+  /** column name */
   Score = 'score',
   /** column name */
-  Title = 'title',
-  /** column name */
-  UserId = 'user_id'
+  Title = 'title'
 }
 
 export type Posts_Updates = {
@@ -2467,6 +2504,7 @@ export type Posts_Updates = {
 export type Posts_Var_Pop_Fields = {
   __typename?: 'posts_var_pop_fields';
   id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
   /** sum of upvotes - sum of down votes on post */
   score?: Maybe<Scalars['Float']['output']>;
 };
@@ -2475,6 +2513,7 @@ export type Posts_Var_Pop_Fields = {
 export type Posts_Var_Samp_Fields = {
   __typename?: 'posts_var_samp_fields';
   id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
   /** sum of upvotes - sum of down votes on post */
   score?: Maybe<Scalars['Float']['output']>;
 };
@@ -2483,8 +2522,263 @@ export type Posts_Var_Samp_Fields = {
 export type Posts_Variance_Fields = {
   __typename?: 'posts_variance_fields';
   id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
   /** sum of upvotes - sum of down votes on post */
   score?: Maybe<Scalars['Float']['output']>;
+};
+
+/** columns and relationships of "profiles" */
+export type Profiles = {
+  __typename?: 'profiles';
+  created_at: Scalars['timestamptz']['output'];
+  id: Scalars['Int']['output'];
+  reputation: Scalars['interval']['output'];
+  updated_at: Scalars['timestamptz']['output'];
+  user_id: Scalars['String']['output'];
+  username: Scalars['String']['output'];
+};
+
+/** aggregated selection of "profiles" */
+export type Profiles_Aggregate = {
+  __typename?: 'profiles_aggregate';
+  aggregate?: Maybe<Profiles_Aggregate_Fields>;
+  nodes: Array<Profiles>;
+};
+
+/** aggregate fields of "profiles" */
+export type Profiles_Aggregate_Fields = {
+  __typename?: 'profiles_aggregate_fields';
+  avg?: Maybe<Profiles_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Profiles_Max_Fields>;
+  min?: Maybe<Profiles_Min_Fields>;
+  stddev?: Maybe<Profiles_Stddev_Fields>;
+  stddev_pop?: Maybe<Profiles_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Profiles_Stddev_Samp_Fields>;
+  sum?: Maybe<Profiles_Sum_Fields>;
+  var_pop?: Maybe<Profiles_Var_Pop_Fields>;
+  var_samp?: Maybe<Profiles_Var_Samp_Fields>;
+  variance?: Maybe<Profiles_Variance_Fields>;
+};
+
+
+/** aggregate fields of "profiles" */
+export type Profiles_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Profiles_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Profiles_Avg_Fields = {
+  __typename?: 'profiles_avg_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "profiles". All fields are combined with a logical 'AND'. */
+export type Profiles_Bool_Exp = {
+  _and?: InputMaybe<Array<Profiles_Bool_Exp>>;
+  _not?: InputMaybe<Profiles_Bool_Exp>;
+  _or?: InputMaybe<Array<Profiles_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  reputation?: InputMaybe<Interval_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+  username?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "profiles" */
+export enum Profiles_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  ProfilesPkey = 'profiles_pkey',
+  /** unique or primary key constraint on columns "user_id" */
+  ProfilesUserIdKey = 'profiles_user_id_key',
+  /** unique or primary key constraint on columns "username" */
+  ProfilesUsernameKey = 'profiles_username_key'
+}
+
+/** input type for incrementing numeric columns in table "profiles" */
+export type Profiles_Inc_Input = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** input type for inserting data into table "profiles" */
+export type Profiles_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  reputation?: InputMaybe<Scalars['interval']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Profiles_Max_Fields = {
+  __typename?: 'profiles_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+  username?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Profiles_Min_Fields = {
+  __typename?: 'profiles_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+  username?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "profiles" */
+export type Profiles_Mutation_Response = {
+  __typename?: 'profiles_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Profiles>;
+};
+
+/** input type for inserting object relation for remote table "profiles" */
+export type Profiles_Obj_Rel_Insert_Input = {
+  data: Profiles_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Profiles_On_Conflict>;
+};
+
+/** on_conflict condition type for table "profiles" */
+export type Profiles_On_Conflict = {
+  constraint: Profiles_Constraint;
+  update_columns?: Array<Profiles_Update_Column>;
+  where?: InputMaybe<Profiles_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "profiles". */
+export type Profiles_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  reputation?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+  username?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: profiles */
+export type Profiles_Pk_Columns_Input = {
+  id: Scalars['Int']['input'];
+};
+
+/** select columns of table "profiles" */
+export enum Profiles_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Reputation = 'reputation',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id',
+  /** column name */
+  Username = 'username'
+}
+
+/** input type for updating data in table "profiles" */
+export type Profiles_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  reputation?: InputMaybe<Scalars['interval']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Profiles_Stddev_Fields = {
+  __typename?: 'profiles_stddev_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Profiles_Stddev_Pop_Fields = {
+  __typename?: 'profiles_stddev_pop_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Profiles_Stddev_Samp_Fields = {
+  __typename?: 'profiles_stddev_samp_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "profiles" */
+export type Profiles_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Profiles_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Profiles_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  reputation?: InputMaybe<Scalars['interval']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Profiles_Sum_Fields = {
+  __typename?: 'profiles_sum_fields';
+  id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** update columns of table "profiles" */
+export enum Profiles_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Reputation = 'reputation',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id',
+  /** column name */
+  Username = 'username'
+}
+
+export type Profiles_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Profiles_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Profiles_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Profiles_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Profiles_Var_Pop_Fields = {
+  __typename?: 'profiles_var_pop_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Profiles_Var_Samp_Fields = {
+  __typename?: 'profiles_var_samp_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Profiles_Variance_Fields = {
+  __typename?: 'profiles_variance_fields';
+  id?: Maybe<Scalars['Float']['output']>;
 };
 
 export type Query_Root = {
@@ -2519,18 +2813,18 @@ export type Query_Root = {
   posts_aggregate: Posts_Aggregate;
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>;
+  /** fetch data from the table: "profiles" */
+  profiles: Array<Profiles>;
+  /** fetch aggregated fields from the table: "profiles" */
+  profiles_aggregate: Profiles_Aggregate;
+  /** fetch data from the table: "profiles" using primary key columns */
+  profiles_by_pk?: Maybe<Profiles>;
   /** fetch data from the table: "tags" */
   tags: Array<Tags>;
   /** fetch aggregated fields from the table: "tags" */
   tags_aggregate: Tags_Aggregate;
   /** fetch data from the table: "tags" using primary key columns */
   tags_by_pk?: Maybe<Tags>;
-  /** fetch data from the table: "users" */
-  users: Array<Users>;
-  /** fetch aggregated fields from the table: "users" */
-  users_aggregate: Users_Aggregate;
-  /** fetch data from the table: "users" using primary key columns */
-  users_by_pk?: Maybe<Users>;
   /** fetch data from the table: "votes" */
   votes: Array<Votes>;
   /** fetch aggregated fields from the table: "votes" */
@@ -2658,6 +2952,29 @@ export type Query_RootPosts_By_PkArgs = {
 };
 
 
+export type Query_RootProfilesArgs = {
+  distinct_on?: InputMaybe<Array<Profiles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Profiles_Order_By>>;
+  where?: InputMaybe<Profiles_Bool_Exp>;
+};
+
+
+export type Query_RootProfiles_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Profiles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Profiles_Order_By>>;
+  where?: InputMaybe<Profiles_Bool_Exp>;
+};
+
+
+export type Query_RootProfiles_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type Query_RootTagsArgs = {
   distinct_on?: InputMaybe<Array<Tags_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -2678,29 +2995,6 @@ export type Query_RootTags_AggregateArgs = {
 
 export type Query_RootTags_By_PkArgs = {
   id: Scalars['Int']['input'];
-};
-
-
-export type Query_RootUsersArgs = {
-  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Users_Order_By>>;
-  where?: InputMaybe<Users_Bool_Exp>;
-};
-
-
-export type Query_RootUsers_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Users_Order_By>>;
-  where?: InputMaybe<Users_Bool_Exp>;
-};
-
-
-export type Query_RootUsers_By_PkArgs = {
-  id: Scalars['String']['input'];
 };
 
 
@@ -2768,6 +3062,14 @@ export type Subscription_Root = {
   posts_by_pk?: Maybe<Posts>;
   /** fetch data from the table in a streaming manner: "posts" */
   posts_stream: Array<Posts>;
+  /** fetch data from the table: "profiles" */
+  profiles: Array<Profiles>;
+  /** fetch aggregated fields from the table: "profiles" */
+  profiles_aggregate: Profiles_Aggregate;
+  /** fetch data from the table: "profiles" using primary key columns */
+  profiles_by_pk?: Maybe<Profiles>;
+  /** fetch data from the table in a streaming manner: "profiles" */
+  profiles_stream: Array<Profiles>;
   /** fetch data from the table: "tags" */
   tags: Array<Tags>;
   /** fetch aggregated fields from the table: "tags" */
@@ -2776,14 +3078,6 @@ export type Subscription_Root = {
   tags_by_pk?: Maybe<Tags>;
   /** fetch data from the table in a streaming manner: "tags" */
   tags_stream: Array<Tags>;
-  /** fetch data from the table: "users" */
-  users: Array<Users>;
-  /** fetch aggregated fields from the table: "users" */
-  users_aggregate: Users_Aggregate;
-  /** fetch data from the table: "users" using primary key columns */
-  users_by_pk?: Maybe<Users>;
-  /** fetch data from the table in a streaming manner: "users" */
-  users_stream: Array<Users>;
   /** fetch data from the table: "votes" */
   votes: Array<Votes>;
   /** fetch aggregated fields from the table: "votes" */
@@ -2948,6 +3242,36 @@ export type Subscription_RootPosts_StreamArgs = {
 };
 
 
+export type Subscription_RootProfilesArgs = {
+  distinct_on?: InputMaybe<Array<Profiles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Profiles_Order_By>>;
+  where?: InputMaybe<Profiles_Bool_Exp>;
+};
+
+
+export type Subscription_RootProfiles_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Profiles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Profiles_Order_By>>;
+  where?: InputMaybe<Profiles_Bool_Exp>;
+};
+
+
+export type Subscription_RootProfiles_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type Subscription_RootProfiles_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Profiles_Stream_Cursor_Input>>;
+  where?: InputMaybe<Profiles_Bool_Exp>;
+};
+
+
 export type Subscription_RootTagsArgs = {
   distinct_on?: InputMaybe<Array<Tags_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -2975,36 +3299,6 @@ export type Subscription_RootTags_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Tags_Stream_Cursor_Input>>;
   where?: InputMaybe<Tags_Bool_Exp>;
-};
-
-
-export type Subscription_RootUsersArgs = {
-  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Users_Order_By>>;
-  where?: InputMaybe<Users_Bool_Exp>;
-};
-
-
-export type Subscription_RootUsers_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Users_Order_By>>;
-  where?: InputMaybe<Users_Bool_Exp>;
-};
-
-
-export type Subscription_RootUsers_By_PkArgs = {
-  id: Scalars['String']['input'];
-};
-
-
-export type Subscription_RootUsers_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Users_Stream_Cursor_Input>>;
-  where?: InputMaybe<Users_Bool_Exp>;
 };
 
 
@@ -3284,271 +3578,6 @@ export type Timestamptz_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['timestamptz']['input']>>;
 };
 
-/** I used varchar for role thinking it will map to a hasura role, but maybe we want a user to have many roles mapping to different sets of permissions? */
-export type Users = {
-  __typename?: 'users';
-  created_at: Scalars['timestamptz']['output'];
-  id: Scalars['String']['output'];
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation: Scalars['Int']['output'];
-  /** Should a user be able to have multiple roles? */
-  role: Scalars['String']['output'];
-  username: Scalars['String']['output'];
-};
-
-/** aggregated selection of "users" */
-export type Users_Aggregate = {
-  __typename?: 'users_aggregate';
-  aggregate?: Maybe<Users_Aggregate_Fields>;
-  nodes: Array<Users>;
-};
-
-/** aggregate fields of "users" */
-export type Users_Aggregate_Fields = {
-  __typename?: 'users_aggregate_fields';
-  avg?: Maybe<Users_Avg_Fields>;
-  count: Scalars['Int']['output'];
-  max?: Maybe<Users_Max_Fields>;
-  min?: Maybe<Users_Min_Fields>;
-  stddev?: Maybe<Users_Stddev_Fields>;
-  stddev_pop?: Maybe<Users_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Users_Stddev_Samp_Fields>;
-  sum?: Maybe<Users_Sum_Fields>;
-  var_pop?: Maybe<Users_Var_Pop_Fields>;
-  var_samp?: Maybe<Users_Var_Samp_Fields>;
-  variance?: Maybe<Users_Variance_Fields>;
-};
-
-
-/** aggregate fields of "users" */
-export type Users_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Users_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** aggregate avg on columns */
-export type Users_Avg_Fields = {
-  __typename?: 'users_avg_fields';
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation?: Maybe<Scalars['Float']['output']>;
-};
-
-/** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
-export type Users_Bool_Exp = {
-  _and?: InputMaybe<Array<Users_Bool_Exp>>;
-  _not?: InputMaybe<Users_Bool_Exp>;
-  _or?: InputMaybe<Array<Users_Bool_Exp>>;
-  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
-  id?: InputMaybe<String_Comparison_Exp>;
-  reputation?: InputMaybe<Int_Comparison_Exp>;
-  role?: InputMaybe<String_Comparison_Exp>;
-  username?: InputMaybe<String_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "users" */
-export enum Users_Constraint {
-  /** unique or primary key constraint on columns "id" */
-  UsersIdKey = 'users_id_key',
-  /** unique or primary key constraint on columns "id" */
-  UsersPkey = 'users_pkey',
-  /** unique or primary key constraint on columns "username" */
-  UsersUsernameKey = 'users_username_key'
-}
-
-/** input type for incrementing numeric columns in table "users" */
-export type Users_Inc_Input = {
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** input type for inserting data into table "users" */
-export type Users_Insert_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  id?: InputMaybe<Scalars['String']['input']>;
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation?: InputMaybe<Scalars['Int']['input']>;
-  /** Should a user be able to have multiple roles? */
-  role?: InputMaybe<Scalars['String']['input']>;
-  username?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate max on columns */
-export type Users_Max_Fields = {
-  __typename?: 'users_max_fields';
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
-  id?: Maybe<Scalars['String']['output']>;
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation?: Maybe<Scalars['Int']['output']>;
-  /** Should a user be able to have multiple roles? */
-  role?: Maybe<Scalars['String']['output']>;
-  username?: Maybe<Scalars['String']['output']>;
-};
-
-/** aggregate min on columns */
-export type Users_Min_Fields = {
-  __typename?: 'users_min_fields';
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
-  id?: Maybe<Scalars['String']['output']>;
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation?: Maybe<Scalars['Int']['output']>;
-  /** Should a user be able to have multiple roles? */
-  role?: Maybe<Scalars['String']['output']>;
-  username?: Maybe<Scalars['String']['output']>;
-};
-
-/** response of any mutation on the table "users" */
-export type Users_Mutation_Response = {
-  __typename?: 'users_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Users>;
-};
-
-/** input type for inserting object relation for remote table "users" */
-export type Users_Obj_Rel_Insert_Input = {
-  data: Users_Insert_Input;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Users_On_Conflict>;
-};
-
-/** on_conflict condition type for table "users" */
-export type Users_On_Conflict = {
-  constraint: Users_Constraint;
-  update_columns?: Array<Users_Update_Column>;
-  where?: InputMaybe<Users_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "users". */
-export type Users_Order_By = {
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  reputation?: InputMaybe<Order_By>;
-  role?: InputMaybe<Order_By>;
-  username?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: users */
-export type Users_Pk_Columns_Input = {
-  id: Scalars['String']['input'];
-};
-
-/** select columns of table "users" */
-export enum Users_Select_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Reputation = 'reputation',
-  /** column name */
-  Role = 'role',
-  /** column name */
-  Username = 'username'
-}
-
-/** input type for updating data in table "users" */
-export type Users_Set_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  id?: InputMaybe<Scalars['String']['input']>;
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation?: InputMaybe<Scalars['Int']['input']>;
-  /** Should a user be able to have multiple roles? */
-  role?: InputMaybe<Scalars['String']['input']>;
-  username?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate stddev on columns */
-export type Users_Stddev_Fields = {
-  __typename?: 'users_stddev_fields';
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Users_Stddev_Pop_Fields = {
-  __typename?: 'users_stddev_pop_fields';
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Users_Stddev_Samp_Fields = {
-  __typename?: 'users_stddev_samp_fields';
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation?: Maybe<Scalars['Float']['output']>;
-};
-
-/** Streaming cursor of the table "users" */
-export type Users_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Users_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Users_Stream_Cursor_Value_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  id?: InputMaybe<Scalars['String']['input']>;
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation?: InputMaybe<Scalars['Int']['input']>;
-  /** Should a user be able to have multiple roles? */
-  role?: InputMaybe<Scalars['String']['input']>;
-  username?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate sum on columns */
-export type Users_Sum_Fields = {
-  __typename?: 'users_sum_fields';
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation?: Maybe<Scalars['Int']['output']>;
-};
-
-/** update columns of table "users" */
-export enum Users_Update_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Reputation = 'reputation',
-  /** column name */
-  Role = 'role',
-  /** column name */
-  Username = 'username'
-}
-
-export type Users_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Users_Inc_Input>;
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Users_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Users_Bool_Exp;
-};
-
-/** aggregate var_pop on columns */
-export type Users_Var_Pop_Fields = {
-  __typename?: 'users_var_pop_fields';
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate var_samp on columns */
-export type Users_Var_Samp_Fields = {
-  __typename?: 'users_var_samp_fields';
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate variance on columns */
-export type Users_Variance_Fields = {
-  __typename?: 'users_variance_fields';
-  /** sum of all up votes on all posts and comments - sum of all down votes on all pots and comments? */
-  reputation?: Maybe<Scalars['Float']['output']>;
-};
-
 /** Up or down vote on a post or comment. Maximum one vote per user, per post or comment enforced by posts_votes or comment_votes pk. Will need to ensure that the post or comment score is updated properly when a user changes their vote. I think the score can be incremented / decremented just fine. Not sure yet whether up votes should be deleted when the user changes their mind and down votes and vice versa, or if the boolean value for up can be flipped. */
 export type Votes = {
   __typename?: 'votes';
@@ -3562,11 +3591,11 @@ export type Votes = {
   post_votes: Array<Post_Votes>;
   /** An aggregate relationship */
   post_votes_aggregate: Post_Votes_Aggregate;
+  /** An object relationship */
+  profile: Profiles;
+  profile_id: Scalars['Int']['output'];
   /** True for up vote, False for down vote. */
   up: Scalars['Boolean']['output'];
-  /** An object relationship */
-  user: Users;
-  user_id: Scalars['String']['output'];
 };
 
 
@@ -3643,6 +3672,7 @@ export type Votes_Aggregate_FieldsCountArgs = {
 export type Votes_Avg_Fields = {
   __typename?: 'votes_avg_fields';
   id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Boolean expression to filter rows from the table "votes". All fields are combined with a logical 'AND'. */
@@ -3656,9 +3686,9 @@ export type Votes_Bool_Exp = {
   id?: InputMaybe<Int_Comparison_Exp>;
   post_votes?: InputMaybe<Post_Votes_Bool_Exp>;
   post_votes_aggregate?: InputMaybe<Post_Votes_Aggregate_Bool_Exp>;
+  profile?: InputMaybe<Profiles_Bool_Exp>;
+  profile_id?: InputMaybe<Int_Comparison_Exp>;
   up?: InputMaybe<Boolean_Comparison_Exp>;
-  user?: InputMaybe<Users_Bool_Exp>;
-  user_id?: InputMaybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "votes" */
@@ -3670,6 +3700,7 @@ export enum Votes_Constraint {
 /** input type for incrementing numeric columns in table "votes" */
 export type Votes_Inc_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
+  profile_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** input type for inserting data into table "votes" */
@@ -3678,10 +3709,10 @@ export type Votes_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
   post_votes?: InputMaybe<Post_Votes_Arr_Rel_Insert_Input>;
+  profile?: InputMaybe<Profiles_Obj_Rel_Insert_Input>;
+  profile_id?: InputMaybe<Scalars['Int']['input']>;
   /** True for up vote, False for down vote. */
   up?: InputMaybe<Scalars['Boolean']['input']>;
-  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
-  user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate max on columns */
@@ -3689,7 +3720,7 @@ export type Votes_Max_Fields = {
   __typename?: 'votes_max_fields';
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
-  user_id?: Maybe<Scalars['String']['output']>;
+  profile_id?: Maybe<Scalars['Int']['output']>;
 };
 
 /** aggregate min on columns */
@@ -3697,7 +3728,7 @@ export type Votes_Min_Fields = {
   __typename?: 'votes_min_fields';
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
-  user_id?: Maybe<Scalars['String']['output']>;
+  profile_id?: Maybe<Scalars['Int']['output']>;
 };
 
 /** response of any mutation on the table "votes" */
@@ -3729,9 +3760,9 @@ export type Votes_Order_By = {
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   post_votes_aggregate?: InputMaybe<Post_Votes_Aggregate_Order_By>;
+  profile?: InputMaybe<Profiles_Order_By>;
+  profile_id?: InputMaybe<Order_By>;
   up?: InputMaybe<Order_By>;
-  user?: InputMaybe<Users_Order_By>;
-  user_id?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: votes */
@@ -3746,36 +3777,39 @@ export enum Votes_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  Up = 'up',
+  ProfileId = 'profile_id',
   /** column name */
-  UserId = 'user_id'
+  Up = 'up'
 }
 
 /** input type for updating data in table "votes" */
 export type Votes_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  profile_id?: InputMaybe<Scalars['Int']['input']>;
   /** True for up vote, False for down vote. */
   up?: InputMaybe<Scalars['Boolean']['input']>;
-  user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate stddev on columns */
 export type Votes_Stddev_Fields = {
   __typename?: 'votes_stddev_fields';
   id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Votes_Stddev_Pop_Fields = {
   __typename?: 'votes_stddev_pop_fields';
   id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Votes_Stddev_Samp_Fields = {
   __typename?: 'votes_stddev_samp_fields';
   id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Streaming cursor of the table "votes" */
@@ -3790,15 +3824,16 @@ export type Votes_Stream_Cursor_Input = {
 export type Votes_Stream_Cursor_Value_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  profile_id?: InputMaybe<Scalars['Int']['input']>;
   /** True for up vote, False for down vote. */
   up?: InputMaybe<Scalars['Boolean']['input']>;
-  user_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate sum on columns */
 export type Votes_Sum_Fields = {
   __typename?: 'votes_sum_fields';
   id?: Maybe<Scalars['Int']['output']>;
+  profile_id?: Maybe<Scalars['Int']['output']>;
 };
 
 /** update columns of table "votes" */
@@ -3808,9 +3843,9 @@ export enum Votes_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  Up = 'up',
+  ProfileId = 'profile_id',
   /** column name */
-  UserId = 'user_id'
+  Up = 'up'
 }
 
 export type Votes_Updates = {
@@ -3826,36 +3861,39 @@ export type Votes_Updates = {
 export type Votes_Var_Pop_Fields = {
   __typename?: 'votes_var_pop_fields';
   id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate var_samp on columns */
 export type Votes_Var_Samp_Fields = {
   __typename?: 'votes_var_samp_fields';
   id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate variance on columns */
 export type Votes_Variance_Fields = {
   __typename?: 'votes_variance_fields';
   id?: Maybe<Scalars['Float']['output']>;
+  profile_id?: Maybe<Scalars['Float']['output']>;
 };
 
 export type ListPostsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListPostsSubscription = { __typename?: 'subscription_root', posts: Array<{ __typename?: 'posts', id: number, title: string, body: string, created_at: any, score: number, user: { __typename?: 'users', id: string, username: string, created_at: any, role: string, reputation: number } }> };
+export type ListPostsSubscription = { __typename?: 'subscription_root', posts: Array<{ __typename?: 'posts', id: number, title: string, body: string, created_at: any, score: number, profile: { __typename?: 'profiles', id: number, username: string, reputation: any } }> };
 
 export type GetPostSubscriptionVariables = Exact<{
   id: Scalars['Int']['input'];
 }>;
 
 
-export type GetPostSubscription = { __typename?: 'subscription_root', posts_by_pk?: { __typename?: 'posts', id: number, title: string, body: string, created_at: any, score: number, user: { __typename?: 'users', id: string, username: string, reputation: number }, comments: Array<{ __typename?: 'comments', id: number, post_id: number, parent_comment_id?: number | null, body: string, score: number, created_at: any, accepted_answer: boolean, user: { __typename?: 'users', id: string, username: string, reputation: number } }> } | null };
+export type GetPostSubscription = { __typename?: 'subscription_root', posts_by_pk?: { __typename?: 'posts', id: number, title: string, body: string, created_at: any, score: number, profile: { __typename?: 'profiles', id: number, username: string, reputation: any }, comments: Array<{ __typename?: 'comments', id: number, post_id: number, parent_comment_id?: number | null, body: string, score: number, created_at: any, accepted_answer: boolean, profile: { __typename?: 'profiles', id: number, username: string, reputation: any } }> } | null };
 
 export type CreatePostMutationVariables = Exact<{
   title: Scalars['String']['input'];
   body: Scalars['String']['input'];
-  user_id: Scalars['String']['input'];
+  profile_id: Scalars['Int']['input'];
 }>;
 
 
@@ -3864,27 +3902,27 @@ export type CreatePostMutation = { __typename?: 'mutation_root', insert_posts_on
 export type CommentOnPostMutationVariables = Exact<{
   post_id: Scalars['Int']['input'];
   body: Scalars['String']['input'];
-  user_id: Scalars['String']['input'];
+  profile_id: Scalars['Int']['input'];
   parent_comment_id?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
 export type CommentOnPostMutation = { __typename?: 'mutation_root', insert_comments_one?: { __typename?: 'comments', body: string } | null };
 
-export type GetUserByIdQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+export type GetProfileByUserIdQueryVariables = Exact<{
+  user_id: Scalars['String']['input'];
 }>;
 
 
-export type GetUserByIdQuery = { __typename?: 'query_root', users_by_pk?: { __typename?: 'users', id: string, username: string, reputation: number, created_at: any } | null };
+export type GetProfileByUserIdQuery = { __typename?: 'query_root', profiles: Array<{ __typename?: 'profiles', id: number, user_id: string, username: string }> };
 
-export type CreateUserMutationVariables = Exact<{
-  id?: InputMaybe<Scalars['String']['input']>;
+export type CreateProfileMutationVariables = Exact<{
   username: Scalars['String']['input'];
+  user_id: Scalars['String']['input'];
 }>;
 
 
-export type CreateUserMutation = { __typename?: 'mutation_root', insert_users_one?: { __typename?: 'users', id: string, username: string, reputation: number, created_at: any } | null };
+export type CreateProfileMutation = { __typename?: 'mutation_root', insert_profiles_one?: { __typename?: 'profiles', id: number, username: string, user_id: string } | null };
 
 
 export const ListPostsDocument = gql`
@@ -3895,11 +3933,9 @@ export const ListPostsDocument = gql`
     body
     created_at
     score
-    user {
+    profile {
       id
       username
-      created_at
-      role
       reputation
     }
   }
@@ -3935,7 +3971,7 @@ export const GetPostDocument = gql`
     body
     created_at
     score
-    user {
+    profile {
       id
       username
       reputation
@@ -3948,7 +3984,7 @@ export const GetPostDocument = gql`
       score
       created_at
       accepted_answer
-      user {
+      profile {
         id
         username
         reputation
@@ -3981,8 +4017,8 @@ export function useGetPostSubscription(baseOptions: Apollo.SubscriptionHookOptio
 export type GetPostSubscriptionHookResult = ReturnType<typeof useGetPostSubscription>;
 export type GetPostSubscriptionResult = Apollo.SubscriptionResult<GetPostSubscription>;
 export const CreatePostDocument = gql`
-    mutation CreatePost($title: String!, $body: String!, $user_id: String!) {
-  insert_posts_one(object: {title: $title, body: $body, user_id: $user_id}) {
+    mutation CreatePost($title: String!, $body: String!, $profile_id: Int!) {
+  insert_posts_one(object: {title: $title, body: $body, profile_id: $profile_id}) {
     title
     body
   }
@@ -4005,7 +4041,7 @@ export type CreatePostMutationFn = Apollo.MutationFunction<CreatePostMutation, C
  *   variables: {
  *      title: // value for 'title'
  *      body: // value for 'body'
- *      user_id: // value for 'user_id'
+ *      profile_id: // value for 'profile_id'
  *   },
  * });
  */
@@ -4017,9 +4053,9 @@ export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutati
 export type CreatePostMutationResult = Apollo.MutationResult<CreatePostMutation>;
 export type CreatePostMutationOptions = Apollo.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
 export const CommentOnPostDocument = gql`
-    mutation CommentOnPost($post_id: Int!, $body: String!, $user_id: String!, $parent_comment_id: Int) {
+    mutation CommentOnPost($post_id: Int!, $body: String!, $profile_id: Int!, $parent_comment_id: Int) {
   insert_comments_one(
-    object: {post_id: $post_id, body: $body, user_id: $user_id, parent_comment_id: $parent_comment_id}
+    object: {post_id: $post_id, body: $body, profile_id: $profile_id, parent_comment_id: $parent_comment_id}
   ) {
     body
   }
@@ -4042,7 +4078,7 @@ export type CommentOnPostMutationFn = Apollo.MutationFunction<CommentOnPostMutat
  *   variables: {
  *      post_id: // value for 'post_id'
  *      body: // value for 'body'
- *      user_id: // value for 'user_id'
+ *      profile_id: // value for 'profile_id'
  *      parent_comment_id: // value for 'parent_comment_id'
  *   },
  * });
@@ -4054,83 +4090,81 @@ export function useCommentOnPostMutation(baseOptions?: Apollo.MutationHookOption
 export type CommentOnPostMutationHookResult = ReturnType<typeof useCommentOnPostMutation>;
 export type CommentOnPostMutationResult = Apollo.MutationResult<CommentOnPostMutation>;
 export type CommentOnPostMutationOptions = Apollo.BaseMutationOptions<CommentOnPostMutation, CommentOnPostMutationVariables>;
-export const GetUserByIdDocument = gql`
-    query GetUserById($id: String!) {
-  users_by_pk(id: $id) {
+export const GetProfileByUserIdDocument = gql`
+    query GetProfileByUserId($user_id: String!) {
+  profiles(distinct_on: user_id, limit: 1, where: {user_id: {_eq: $user_id}}) {
     id
+    user_id
     username
-    reputation
-    created_at
   }
 }
     `;
 
 /**
- * __useGetUserByIdQuery__
+ * __useGetProfileByUserIdQuery__
  *
- * To run a query within a React component, call `useGetUserByIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetProfileByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProfileByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetUserByIdQuery({
+ * const { data, loading, error } = useGetProfileByUserIdQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      user_id: // value for 'user_id'
  *   },
  * });
  */
-export function useGetUserByIdQuery(baseOptions: Apollo.QueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables> & ({ variables: GetUserByIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function useGetProfileByUserIdQuery(baseOptions: Apollo.QueryHookOptions<GetProfileByUserIdQuery, GetProfileByUserIdQueryVariables> & ({ variables: GetProfileByUserIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserByIdDocument, options);
+        return Apollo.useQuery<GetProfileByUserIdQuery, GetProfileByUserIdQueryVariables>(GetProfileByUserIdDocument, options);
       }
-export function useGetUserByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables>) {
+export function useGetProfileByUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProfileByUserIdQuery, GetProfileByUserIdQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserByIdDocument, options);
+          return Apollo.useLazyQuery<GetProfileByUserIdQuery, GetProfileByUserIdQueryVariables>(GetProfileByUserIdDocument, options);
         }
-export function useGetUserByIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables>) {
+export function useGetProfileByUserIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetProfileByUserIdQuery, GetProfileByUserIdQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserByIdDocument, options);
+          return Apollo.useSuspenseQuery<GetProfileByUserIdQuery, GetProfileByUserIdQueryVariables>(GetProfileByUserIdDocument, options);
         }
-export type GetUserByIdQueryHookResult = ReturnType<typeof useGetUserByIdQuery>;
-export type GetUserByIdLazyQueryHookResult = ReturnType<typeof useGetUserByIdLazyQuery>;
-export type GetUserByIdSuspenseQueryHookResult = ReturnType<typeof useGetUserByIdSuspenseQuery>;
-export type GetUserByIdQueryResult = Apollo.QueryResult<GetUserByIdQuery, GetUserByIdQueryVariables>;
-export const CreateUserDocument = gql`
-    mutation CreateUser($id: String, $username: String!) {
-  insert_users_one(object: {id: $id, username: $username}) {
+export type GetProfileByUserIdQueryHookResult = ReturnType<typeof useGetProfileByUserIdQuery>;
+export type GetProfileByUserIdLazyQueryHookResult = ReturnType<typeof useGetProfileByUserIdLazyQuery>;
+export type GetProfileByUserIdSuspenseQueryHookResult = ReturnType<typeof useGetProfileByUserIdSuspenseQuery>;
+export type GetProfileByUserIdQueryResult = Apollo.QueryResult<GetProfileByUserIdQuery, GetProfileByUserIdQueryVariables>;
+export const CreateProfileDocument = gql`
+    mutation CreateProfile($username: String!, $user_id: String!) {
+  insert_profiles_one(object: {username: $username, user_id: $user_id}) {
     id
     username
-    reputation
-    created_at
+    user_id
   }
 }
     `;
-export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+export type CreateProfileMutationFn = Apollo.MutationFunction<CreateProfileMutation, CreateProfileMutationVariables>;
 
 /**
- * __useCreateUserMutation__
+ * __useCreateProfileMutation__
  *
- * To run a mutation, you first call `useCreateUserMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateUserMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useCreateProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateProfileMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
+ * const [createProfileMutation, { data, loading, error }] = useCreateProfileMutation({
  *   variables: {
- *      id: // value for 'id'
  *      username: // value for 'username'
+ *      user_id: // value for 'user_id'
  *   },
  * });
  */
-export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
+export function useCreateProfileMutation(baseOptions?: Apollo.MutationHookOptions<CreateProfileMutation, CreateProfileMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
+        return Apollo.useMutation<CreateProfileMutation, CreateProfileMutationVariables>(CreateProfileDocument, options);
       }
-export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
-export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
-export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
+export type CreateProfileMutationHookResult = ReturnType<typeof useCreateProfileMutation>;
+export type CreateProfileMutationResult = Apollo.MutationResult<CreateProfileMutation>;
+export type CreateProfileMutationOptions = Apollo.BaseMutationOptions<CreateProfileMutation, CreateProfileMutationVariables>;
