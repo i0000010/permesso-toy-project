@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "graphql-codegen": "graphql-codegen --config codegen.ts",
+    "openapi-codegen": "openapi --input https://permesso-toy-project.vercel.app/api/schema.json --output ./src/generated/api.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.10.4",
@@ -36,6 +37,7 @@
     "js-cookie": "^3.0.5",
     "next": "14.2.2",
     "next-client-cookies": "^1.1.1",
+    "openapi-typescript-codegen": "^0.29.0",
     "react": "^18",
     "react-dom": "^18",
     "server-only": "^0.0.1",
