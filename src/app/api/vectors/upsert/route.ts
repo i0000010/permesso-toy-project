@@ -8,17 +8,30 @@ import Joi from 'joi';
 
 const PINECONE_INDEX = 'permesso-toy-app-post-titles';
 
+const PostSchema = Joi.object({
+    id: Joi.number().integer().positive().required(),
+    title: Joi.string().required(),
+    body: Joi.string().required(),
+    score: Joi.number().integer().required(),
+    created_at: Joi.string().required(),
+    profile_id: Joi.number().integer().positive().required(),
+})
+
+const CommentSchema = Joi.object({
+    id: Joi.number().integer().positive().required(),
+    post_id: Joi.number().integer().positive().required(),
+    parent_comment_id: Joi.number().integer().positive().optional(),
+    body: Joi.string().required(),
+    score: Joi.number().integer().required(),
+    accepted_answer: Joi.boolean().optional(),
+    created_at: Joi.string().required(),
+    profile_id: Joi.number().integer().positive().required(),
+})
+
 const EventSchema = Joi.object({
     event: Joi.object({
         op: Joi.string().valid('INSERT').required(),
-        data: Joi.object({
-            score: Joi.number().integer().required(),
-            profile_id: Joi.number().integer().positive().required(),
-            id: Joi.number().integer().positive().required(),
-            title: Joi.string().required(),
-            body: Joi.string().required(),
-            created_at: Joi.string().required(),
-        }).required(),
+        data: Joi.alternatives().try(PostSchema, CommentSchema).required(),
         session_variables: Joi.object().optional(),
     }).required(),
 
@@ -39,6 +52,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const { event } = value;
     const { data } = event;
+    const { tableName } = value.table;
 
     const PINECONE_API_KEY = process.env.PINECONE_API_KEY;
     if (!PINECONE_API_KEY) {
@@ -68,17 +82,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     );
 
     const document = new Document({
-        // metadata: {
-        //     post: {
-        //         id: data.id,
-        //         title: data.title,
-        //         body: data.body,
-        //         score: data.score,
-        //         created_at: data.created_at,
-        //     }
-        // },
         metadata: {
-            post_id: data.id,
+            post_id: tableName === 'posts' ? data.id : data.post_id,
             table: data.table.name,
         },
         pageContent: data.body,
