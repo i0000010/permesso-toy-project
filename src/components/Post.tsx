@@ -1,10 +1,10 @@
 'use client';
 import React from 'react';
-import { GetPostSubscription } from "@/generated/graphql";
+import { ListPostsSubscription } from "@/generated/graphql";
 import Link from "next/link";
 
 interface PostProps {
-    post: NonNullable<GetPostSubscription["posts_by_pk"]>;
+    post: NonNullable<ListPostsSubscription["posts"]>[0];
 }
 
 const Post: React.FC<PostProps> = ({ post }) => {
