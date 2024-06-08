@@ -69,7 +69,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const document = new Document({
         metadata: {
-            post_id: data.id,
+            post: {
+                id: data.id,
+                title: data.title,
+                body: data.body,
+                score: data.score,
+                created_at: data.created_at,
+            }
         },
         pageContent: data.body,
     })

@@ -1,0 +1,104 @@
+'use client';
+
+import React, { KeyboardEvent, useState } from 'react';
+import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react';
+import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
+import SearchResult from './SearchResult';
+import type { SearchResultProps } from './SearchResult';
+
+interface SearchResult {
+    pageContent: string;
+    metadata: SearchResultProps;
+}
+
+const Search: React.FC = () => {
+
+    const [query, setQuery] = useState<string>('');
+    const [result, setResult] = useState<SearchResult[]>([]);
+    const [error, setError] = useState(null);
+
+    const handleSubmit = async (event: KeyboardEvent<HTMLInputElement>) => {
+        console.log('submit query: ', query);
+        event.preventDefault();
+        setError(null);
+        setResult([]);
+    
+        try {
+          const response = await fetch('/api/vectors/query', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ content: query }),
+          });
+    
+          if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+          }
+    
+          const data = await response.json();
+          console.log('data: ', data);
+          setResult(data);
+        } catch (err: any) {
+          setError(err.message);
+        }
+      };
+
+    return (
+        <Combobox>
+            <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 absolute my-2 mx-3" aria-hidden="true" />    
+            <ComboboxInput
+                className="block w-full rounded-md border-0 bg-white dark:bg-gray-700 py-1.5 pl-10 pr-3 text-gray-900 dark:text-gray-300 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue sm:text-sm sm:leading-6"
+                placeholder="Search"
+                type="search"
+                autoComplete="off"
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        handleSubmit(e);
+                    }
+                }}
+            />
+            <ComboboxOptions
+                className="absolute w-full py-1 mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-700 rounded-md shadow-lg z-10 sm:text-sm sm:leading-5"
+            >
+                {error && <p>{error}</p>}
+                {result && result.map((item) => (
+                    <ComboboxOption key={item.metadata.id} value={item.pageContent}>
+                        <SearchResult
+                            id={item.metadata.id}
+                            title={item.metadata.title}
+                            body={item.metadata.body}
+                            score={item.metadata.score}
+                            created_at={item.metadata.created_at}
+                        />
+                    </ComboboxOption>
+                ))}
+            </ComboboxOptions>
+        </Combobox>
+    )
+
+
+    return (
+      <>
+        <label htmlFor="search" className="sr-only">
+            Search
+            </label>
+            <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+            </div>
+            <input
+                id="search"
+                name="search"
+                className="block w-full rounded-md border-0 bg-white dark:bg-gray-700 py-1.5 pl-10 pr-3 text-gray-900 dark:text-gray-300 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue sm:text-sm sm:leading-6"
+                placeholder="Search"
+                type="search"
+                autoComplete="off"
+            />
+            </div>
+        </>  
+    )
+}
+
+export default Search;

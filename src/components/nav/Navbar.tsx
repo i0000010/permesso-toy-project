@@ -3,14 +3,12 @@
 import React, { Fragment } from "react";
 import Link from "next/link";
 import { Popover, Menu, Transition } from '@headlessui/react'
-import { AuthContextProvider } from "@/context/AuthContext";
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-// import { UserCircleIcon } from "@heroicons/react/16/solid";
 import { UserIcon } from '@heroicons/react/24/outline';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import MobileAuthMenu from "@/components/nav/MobileAuthMenu";
 import AuthMenu from "@/components/nav/AuthMenu";
 import ThemeSelector from "@/components/nav/ThemeSelector";
+import Search from "@/components/Search";
 import { useCookies } from 'next-client-cookies';
 import Image from "next/image";
 import clsx from 'clsx'
@@ -50,22 +48,7 @@ const Navbar: React.FC = () => {
                 <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
                   <div className="flex items-center px-6 py-4 md:mx-auto md:max-w-3xl lg:mx-0 lg:max-w-none xl:px-0">
                     <div className="w-full">
-                      <label htmlFor="search" className="sr-only">
-                        Search
-                      </label>
-                      <div className="relative">
-                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                          <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                        </div>
-                        <input
-                          id="search"
-                          name="search"
-                          className="block w-full rounded-md border-0 bg-white dark:bg-gray-700 py-1.5 pl-10 pr-3 text-gray-900 dark:text-gray-300 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue sm:text-sm sm:leading-6"
-                          placeholder="Search"
-                          type="search"
-                          autoComplete="off"
-                        />
-                      </div>
+                      <Search />
                     </div>
                   </div>
                 </div>
@@ -151,19 +134,6 @@ const Navbar: React.FC = () => {
       </Popover>
     </>
   )
-
-  // return (
-  //   <AuthContextProvider>
-  //     <div className="h-20 w-full border-b-2 flex items-center justify-between p-2">
-  //       <ul className="flex">
-  //         <li className="p-2 cursor-pointer">
-  //           <Link href="/">Permesso</Link>
-  //         </li>
-  //       </ul>
-  //       <Authentication />
-  //     </div>
-  //   </AuthContextProvider>
-  // );
 };
 
 export default Navbar;
