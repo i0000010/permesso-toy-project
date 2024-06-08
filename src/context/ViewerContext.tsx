@@ -33,8 +33,6 @@ export const ViewerContextProvider: React.FC<React.PropsWithChildren> = ({ child
     if (data && data.profiles.length > 0) {
         const profile = data.profiles[0];
         setViewer(profile);
-    } else {
-      // router.push('/protected/profile');
     }
 
     if (!user) {
