@@ -12,13 +12,16 @@ import Search from "@/components/Search";
 import { useCookies } from 'next-client-cookies';
 import Image from "next/image";
 import clsx from 'clsx'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 
 const Navbar: React.FC = () => {
   const cookies = useCookies();
   const theme = cookies.get('x-theme') || 'light';
+  const queryClient = new QueryClient();
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       {/* When the mobile menu is open, add `overflow-hidden` to the `body` element to prevent double scrollbars */}
       <Popover
         as="header"
@@ -131,7 +134,7 @@ const Navbar: React.FC = () => {
           </>
         )}
       </Popover>
-    </>
+    </QueryClientProvider>
   )
 };
 

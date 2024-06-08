@@ -3,25 +3,19 @@ import { NextRequest, NextResponse } from "next/server";
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { PineconeStore } from '@langchain/pinecone';
 import { Pinecone } from '@pinecone-database/pinecone';
-import Joi from 'joi';
 
 const PINECONE_INDEX = 'permesso-toy-app-post-titles';
 
-const schema = Joi.object({
-    query: Joi.string().required()
-})
+export async function GET(req: NextRequest, res: NextResponse) {
+    const query = req.nextUrl.searchParams.get('query');
 
-export async function POST(req: NextRequest, res: NextResponse) {
-    const body = await req.json();
-    const { error, value } = schema.validate(body);
-    if (error) {
-        return NextResponse.json({ error: error.message }, { status: 400 });
+    if (!query) {
+        return NextResponse.json({ error: 'query parameter is required' }, { status: 400 });
     }
-    const { query } = value;
-
+    console.log('query: ', query);
     const PINECONE_API_KEY = process.env.PINECONE_API_KEY;
     if (!PINECONE_API_KEY) {
-        return NextResponse.json({ error: 'PINECONE_API_KEY is not set'})
+        return NextResponse.json({ error: 'PINECONE_API_KEY is not set'}, { status: 500 })
     }
     
     const pinecone = new Pinecone({ apiKey: PINECONE_API_KEY });

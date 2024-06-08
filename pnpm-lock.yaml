@@ -47,6 +47,9 @@ dependencies:
   '@tailwindcss/forms':
     specifier: ^0.5.7
     version: 0.5.7(tailwindcss@3.4.3)
+  '@tanstack/react-query':
+    specifier: ^5.40.1
+    version: 5.40.1(react@18.3.0)
   clsx:
     specifier: ^2.1.1
     version: 2.1.1
@@ -2768,6 +2771,19 @@ packages:
     dependencies:
       mini-svg-data-uri: 1.4.4
       tailwindcss: 3.4.3(ts-node@10.9.2)
+    dev: false
+
+  /@tanstack/query-core@5.40.0:
+    resolution: {integrity: sha512-eD8K8jsOIq0Z5u/QbvOmfvKKE/XC39jA7yv4hgpl/1SRiU+J8QCIwgM/mEHuunQsL87dcvnHqSVLmf9pD4CiaA==, tarball: https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.40.0.tgz}
+    dev: false
+
+  /@tanstack/react-query@5.40.1(react@18.3.0):
+    resolution: {integrity: sha512-gOcmu+gpFd2taHrrgMM9RemLYYEDYfsCqszxCC0xtx+csDa4R8t7Hr7SfWXQP13S2sF+mOxySo/+FNXJFYBqcA==, tarball: https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.40.1.tgz}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      '@tanstack/query-core': 5.40.0
+      react: 18.3.0
     dev: false
 
   /@tanstack/react-virtual@3.0.0-beta.60(react@18.3.0):
