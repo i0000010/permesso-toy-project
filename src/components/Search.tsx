@@ -4,24 +4,26 @@ import React, { KeyboardEvent, useState } from 'react';
 import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import SearchResult from './SearchResult';
-import type { SearchResultProps } from './SearchResult';
 
 interface SearchResult {
     pageContent: string;
-    metadata: SearchResultProps;
+    metadata: {
+        post_id: number,
+        text: string;
+    };
 }
 
 const Search: React.FC = () => {
 
     const [query, setQuery] = useState<string>('');
-    const [result, setResult] = useState<SearchResult[]>([]);
+    const [results, setResults] = useState<SearchResult[]>([]);
     const [error, setError] = useState(null);
 
     const handleSubmit = async (event: KeyboardEvent<HTMLInputElement>) => {
         console.log('submit query: ', query);
         event.preventDefault();
         setError(null);
-        setResult([]);
+        setResults([]);
     
         try {
           const response = await fetch('/api/vectors/query', {
@@ -38,7 +40,7 @@ const Search: React.FC = () => {
     
           const data = await response.json();
           console.log('data: ', data);
-          setResult(data);
+          setResults(data);
         } catch (err: any) {
           setError(err.message);
         }
@@ -60,17 +62,14 @@ const Search: React.FC = () => {
                 }}
             />
             <ComboboxOptions
-                className="absolute w-full py-1 mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-700 rounded-md shadow-lg z-10 sm:text-sm sm:leading-5"
+                className="absolute py-1 mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-700 rounded-md shadow-lg z-10 sm:text-sm sm:leading-5"
             >
                 {error && <p>{error}</p>}
-                {result && result.map((item) => (
-                    <ComboboxOption key={item.metadata.id} value={item.pageContent}>
+                {results && results.length > 0 && results.map((result) => (
+                    <ComboboxOption key={result.metadata.post_id} value={result.pageContent}>
                         <SearchResult
-                            id={item.metadata.id}
-                            title={item.metadata.title}
-                            body={item.metadata.body}
-                            score={item.metadata.score}
-                            created_at={item.metadata.created_at}
+                            post_id={result.metadata.post_id}
+                            content={result.pageContent}
                         />
                     </ComboboxOption>
                 ))}

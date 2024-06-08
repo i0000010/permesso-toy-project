@@ -2,30 +2,21 @@
 import Link from 'next/link';
 import React from 'react';
 
-export interface SearchResultProps {
-    id: number;
-    title: string;
-    body: string;
-    score: number;
-    created_at: string;
+
+interface SearchResultProps {
+    post_id: number;
+    content: string;
 }
 
-const SearchResult: React.FC<SearchResultProps> = ({ id, title, body, score, created_at}) => {
+const SearchResult: React.FC<SearchResultProps> = ({ post_id, content }) => {
+
     return (
         <Link
-            href={`/posts/${id}`}
+            href={`/posts/${post_id}`}
             passHref
-            className="bg-gray-50 dark:bg-gray-700 px-4 py-5 sm:px-6 rounded-md my-2 w-full"
+            className="block w-full rounded-md border-0 bg-white dark:bg-gray-700 py-1.5 pl-10 pr-3 text-gray-900 dark:text-gray-300 sm:text-sm sm:leading-6"
         >
-            <div className="flex space-x-3">
-                <div className="min-w-0 flex-1">
-                    <p>{created_at}</p>
-                </div>
-            </div>
-            <div>
-                <p className="mt-2 text-xl">{title}</p>
-                <p className="mt-3 text-base">{body}</p>
-            </div>
+            <span>{content}</span>
         </Link>
     )
 }

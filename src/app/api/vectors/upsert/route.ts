@@ -68,14 +68,17 @@ export async function POST(req: NextRequest, res: NextResponse) {
     );
 
     const document = new Document({
+        // metadata: {
+        //     post: {
+        //         id: data.id,
+        //         title: data.title,
+        //         body: data.body,
+        //         score: data.score,
+        //         created_at: data.created_at,
+        //     }
+        // },
         metadata: {
-            post: {
-                id: data.id,
-                title: data.title,
-                body: data.body,
-                score: data.score,
-                created_at: data.created_at,
-            }
+            post_id: data.id,
         },
         pageContent: data.body,
     })
