@@ -8,6 +8,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useViewer } from "@/context/ViewerContext";
 import * as Yup from 'yup';
 import Comments from "@/components/Comments";
+import Link from "next/link";
 
 interface PostPageProps {
     params: {
@@ -69,9 +70,17 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                                 <div className="flex">
                                 </div>
                                 <div className="flex-shrink-0">
-                                    <button type="submit"className={clsx("inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue hover:bg-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500", isSubmitting && "opacity-50 cursor-not-allowed")}>
-                                        Add Comment
-                                    </button>
+                                    { viewer ? (
+                                        <button type="submit"className={clsx("inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue hover:bg-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500", isSubmitting && "opacity-50 cursor-not-allowed")}>
+                                            Add Comment
+                                        </button>
+                                    ) : (
+                                        <Link
+                                        className={clsx("inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue hover:bg-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500", isSubmitting && "opacity-50 cursor-not-allowed")}
+                                            href="/protected/profile">
+                                            Create profile to Comment
+                                        </Link>
+                                    )}
                                 </div>
                             </div>
                         </Form>

@@ -95,11 +95,13 @@ const Comment: React.FC<CommentProps> = ({ comment, children }) => {
                     <p className="mt-2 text-base">{comment.body}</p>
                     {/* // add a button at the bottom right that when clicks reveals a form to respond to this comment */}
                     <div className="flex justify-end">
+                        {viewer ? (
                         <button
                             className="text-sm text-blue-500 hover:text-blue-700"
                             onClick={() => setShowForm(!showForm)}
                         >{showForm? "Close": "Respond"}
                         </button>
+                        ): null}
                     </div>
                     {showForm && viewer && <RespondToComment viewer={viewer} comment={comment} handleSubmit={setShowForm} />}
 
