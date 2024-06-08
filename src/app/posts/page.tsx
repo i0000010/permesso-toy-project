@@ -15,6 +15,8 @@ export default function PostPage() {
   const [createPost] = useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument);
 
   if (!viewer) {
+    router.push('/protected/profile')
+
     return (
       <div>
         <h1>Not authenticated</h1>

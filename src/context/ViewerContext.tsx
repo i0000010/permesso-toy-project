@@ -4,6 +4,7 @@ import { useContext, createContext, useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useQuery } from "@apollo/client";
 import { GetProfileByUserIdQuery, GetProfileByUserIdDocument, GetProfileByUserIdQueryVariables } from "@/generated/graphql";
+import { useRouter } from "next/navigation";
 
 export type Viewer = GetProfileByUserIdQuery['profiles'][0];
 
@@ -26,14 +27,21 @@ export const ViewerContextProvider: React.FC<React.PropsWithChildren> = ({ child
     }
   });
 
+  const router = useRouter();
+
   useEffect(() => {
     if (data && data.profiles.length > 0) {
         const profile = data.profiles[0];
         setViewer(profile);
     }
 
-    if (!user) {
+    else if (!user) {
       setViewer(null);
+    }
+
+    // if (user && !data) {
+    else {
+      router.push('/protected/profile');
     }
 
   }, [data, user]);
