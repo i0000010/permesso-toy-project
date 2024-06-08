@@ -3,13 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { PineconeStore } from '@langchain/pinecone';
 import { Pinecone } from '@pinecone-database/pinecone';
-import { Document } from '@langchain/core/documents';
 import Joi from 'joi';
 
 const PINECONE_INDEX = 'permesso-toy-app-post-titles';
 
 const schema = Joi.object({
-    content: Joi.string().required()
+    query: Joi.string().required()
 })
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -18,6 +17,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     if (error) {
         return NextResponse.json({ error: error.message }, { status: 400 });
     }
+    const { query } = value;
 
     const PINECONE_API_KEY = process.env.PINECONE_API_KEY;
     if (!PINECONE_API_KEY) {
@@ -46,6 +46,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
         { pineconeIndex: index }
     );
 
-    const results = await vectorStore.similaritySearch("pinecone", 5);
+    const results = await vectorStore.similaritySearch(query, 5);
     return NextResponse.json(results);
 }

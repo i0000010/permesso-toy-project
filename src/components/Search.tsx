@@ -31,7 +31,7 @@ const Search: React.FC = () => {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ content: query }),
+            body: JSON.stringify({ query }),
           });
     
           if (!response.ok) {

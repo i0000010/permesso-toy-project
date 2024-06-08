@@ -13,7 +13,6 @@ import { useCookies } from 'next-client-cookies';
 import Image from "next/image";
 import clsx from 'clsx'
 
-
 const Navbar: React.FC = () => {
   const cookies = useCookies();
   const theme = cookies.get('x-theme') || 'light';
