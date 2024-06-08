@@ -9,6 +9,7 @@ interface SearchResult {
     pageContent: string;
     metadata: {
         post_id: number,
+        table: "posts" | "comments",
         text: string;
     };
 }
@@ -69,6 +70,7 @@ const Search: React.FC = () => {
                     <ComboboxOption key={result.metadata.post_id} value={result.pageContent}>
                         <SearchResult
                             post_id={result.metadata.post_id}
+                            table={result.metadata.table}
                             content={result.pageContent}
                         />
                     </ComboboxOption>

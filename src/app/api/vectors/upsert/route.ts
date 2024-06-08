@@ -23,8 +23,8 @@ const EventSchema = Joi.object({
     }).required(),
 
     table: Joi.object({
-        schema: Joi.string().required(),
-        name: Joi.string().required(),
+        schema: Joi.string().valid('default').required(),
+        name: Joi.string().valid('posts', 'comments').required(),
     }).required(),
 })
 
@@ -79,6 +79,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         // },
         metadata: {
             post_id: data.id,
+            table: data.table.name,
         },
         pageContent: data.body,
     })
