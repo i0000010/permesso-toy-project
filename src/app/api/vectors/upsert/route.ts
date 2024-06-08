@@ -36,7 +36,7 @@ const EventSchema = Joi.object({
     }).required(),
 
     table: Joi.object({
-        schema: Joi.string().valid('default').required(),
+        schema: Joi.string().valid('public').required(),
         name: Joi.string().valid('posts', 'comments').required(),
     }).required(),
 })
