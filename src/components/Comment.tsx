@@ -3,7 +3,11 @@
 import React, { useState } from 'react';
 import { useMutation } from "@apollo/client";
 import type { GetPostSubscription } from '@/generated/graphql';
-import { CommentOnPostMutation, CommentOnPostDocument, CommentOnPostMutationVariables } from "@/generated/graphql";
+import {
+    CommentOnPostMutation, CommentOnPostDocument, CommentOnPostMutationVariables,
+    VoteOnCommentMutation, VoteOnCommentDocument, VoteOnCommentMutationVariables,
+    DeleteVoteOnCommentMutation, DeleteVoteOnCommentDocument, DeleteVoteOnCommentMutationVariables,
+ } from "@/generated/graphql";
 
 // import firebase user type
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -12,6 +16,8 @@ import type { Viewer } from "@/context/ViewerContext";
 import * as Yup from 'yup';
 import clsx from 'clsx';
 import { Dispatch, SetStateAction } from 'react';
+import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
+
 
 interface RespondToCommentProps {
     viewer: Viewer;
@@ -77,18 +83,85 @@ export interface CommentProps {
 const Comment: React.FC<CommentProps> = ({ comment, children }) => {
 
     const { viewer } = useViewer();
+    const [deleteVote] = useMutation<DeleteVoteOnCommentMutation, DeleteVoteOnCommentMutationVariables>(DeleteVoteOnCommentDocument);
+    const [castVote] = useMutation<VoteOnCommentMutation, VoteOnCommentMutationVariables>(VoteOnCommentDocument);
 
     const [showForm, setShowForm] = useState(false);
 
     return (
         <div>
             <div className="bg-gray-50 dark:bg-gray-700 px-4 py-5 sm:px-6 rounded-md my-2 w-full">
-                <div className="flex space-x-3">
-                    <div className="min-w-0 flex-1">
-                        <p className="text-sm font-semibold">
-                            {comment.profile?.username}
-                        </p>
-                        <p>{comment.created_at.slice(0, 10)}</p>
+                <div className="flex justify-between">
+
+                    <div className="flex space-x-3">
+                        <div className="min-w-0 flex-1">
+                            <p className="text-sm font-semibold">
+                                {comment.profile?.username}
+                            </p>
+                            <p>{comment.created_at.slice(0, 10)}</p>
+                        </div>
+                    </div>
+
+                    <div className="flex-shrink-0">
+                        <div className="flex flex-col items-center">
+                            {viewer ?
+                                <>
+                                    <button
+                                        onClick={(event) => {
+                                            event?.preventDefault();
+                                            viewer && comment.votes.find(vote => vote.profile_id === viewer.id && vote.value === 1) ?
+                                                deleteVote({
+                                                    variables: {
+                                                        profile_id: viewer.id,
+                                                        comment_id: comment.id!
+                                                    }
+                                                }) :
+                                                castVote({
+                                                    variables: {
+                                                        profile_id: viewer.id,
+                                                        comment_id: comment.id!,
+                                                        value: 1
+                                                    }
+                                                })
+                                        }}
+                                    >
+                                        <ChevronUpIcon
+                                            className={clsx("h-5 w-5",
+                                                viewer && comment.votes.find(vote => vote.profile_id === viewer.id && vote.value === 1) ? "text-green-500" : "text-gray-500"
+                                            )}
+                                            aria-hidden="true"
+                                        />
+                                    </button>
+                                    <p className="text-sm">{comment.score![0].score}</p>
+                                    <button
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            viewer && comment.votes.find(vote => vote.profile_id === viewer.id && vote.value === -1) ?
+                                                deleteVote({
+                                                    variables: {
+                                                        profile_id: viewer.id,
+                                                        comment_id: comment.id!
+                                                    }
+                                                }) :
+                                                castVote({
+                                                    variables: {
+                                                        profile_id: viewer.id,
+                                                        comment_id: comment.id!,
+                                                        value: -1
+                                                    }
+                                                })
+                                        }}
+                                    >
+                                        <ChevronDownIcon
+                                            className={clsx("h-5 w-5",
+                                                viewer && comment.votes.find(vote => vote.profile_id === viewer.id && vote.value === -1) ? "text-red-500" : "text-gray-500"
+                                            )}
+                                            aria-hidden="true"
+                                        />
+                                    </button>
+                                </>
+                                : null}
+                            </div>
                     </div>
                 </div>
                 <div>

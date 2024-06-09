@@ -11,9 +11,31 @@ mutation VoteOnPost($profile_id: Int!, $post_id: Int!, $value: Int!) {
   }
 }
 
+mutation VoteOnComment($profile_id: Int!, $comment_id: Int!, $value: Int!) {
+  create_or_update_vote_on_comment(args:{
+    p_comment_id: $comment_id,
+    p_profile_id: $profile_id,
+    p_value: $value
+  }) {
+    id
+    comment_id
+    profile_id
+    value
+  }
+}
+
 mutation DeleteVoteOnPost($post_id: Int!, $profile_id: Int!) {
   delete_votes(where: {
     post_id: {_eq: $post_id},
+    profile_id: {_eq: $profile_id}
+  }) {
+    affected_rows
+  }
+}
+
+mutation DeleteVoteOnComment($comment_id: Int!, $profile_id: Int!) {
+  delete_votes(where: {
+    comment_id: {_eq: $comment_id},
     profile_id: {_eq: $profile_id}
   }) {
     affected_rows

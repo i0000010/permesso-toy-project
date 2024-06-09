@@ -38,13 +38,19 @@ subscription GetPost($id: Int!) {
       post_id
       parent_comment_id
       body
-      score
+      score {
+        score
+      }
       created_at
       accepted_answer
       profile {
         id
         username
         reputation
+      }
+      votes {
+        profile_id
+        value
       }
     }
     votes {
