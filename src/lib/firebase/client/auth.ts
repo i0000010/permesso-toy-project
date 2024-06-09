@@ -26,8 +26,6 @@ export async function signInWithGoogle(router: AppRouterInstance, nextRoute: str
 
     if (isMobile) {
         try {
-            router.push("/404");
-            return;
             await signInWithPopup(auth, provider).then(async (result) => {
                 if (result.user) {
                     let token = await result.user.getIdToken();
