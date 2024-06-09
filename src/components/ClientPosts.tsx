@@ -1,19 +1,13 @@
 "use client";
 import React from "react";
 import { useSubscription } from "@apollo/client";
-import { ListPostsSubscription, ListPostsDocument } from "@/generated/graphql";
+import { ListPostsSubscription, ListPostsDocument } from '@/generated/graphql';
 import Link from "next/link";
 import Post from "@/components/Post";
-import clsx from "clsx";
-
+import { useViewer } from "@/context/ViewerContext";
 
 // export async function getServerSideProps() {
 //     const data = useQuery<ListPostsQuery>(ListPostsDocument);
-
-
-
-
-
 
 
 const Posts = () => {

@@ -39,7 +39,6 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             <div className="w-full">
                 <Post post={data.posts_by_pk} />
 
-                {/* {user ?? <Formik} */}
                 <Formik
                     initialValues={{
                         body: "",

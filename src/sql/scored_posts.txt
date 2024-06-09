@@ -1,0 +1,20 @@
+CREATE
+OR REPLACE VIEW "public"."scored_posts" AS
+SELECT
+  p.id,
+  p.title,
+  p.body,
+  p.profile_id,
+  p.created_at,
+  sum(v.value) AS score
+FROM
+  (
+    posts p
+    LEFT JOIN votes v ON ((p.id = v.post_id))
+  )
+GROUP BY
+  p.id,
+  p.title,
+  p.body,
+  p.profile_id,
+  p.created_at;

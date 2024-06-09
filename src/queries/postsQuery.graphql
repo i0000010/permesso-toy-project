@@ -4,11 +4,17 @@ subscription ListPosts {
     title
     body
     created_at
-    score
+    score {
+      score
+    }
     profile {
       id
       username
       reputation
+    }
+    votes {
+      profile_id
+      value
     }
   }
 }
@@ -19,7 +25,9 @@ subscription GetPost($id: Int!) {
     title
     body
     created_at
-    score
+    score {
+      score
+    }
     profile {
       id
       username
@@ -38,6 +46,10 @@ subscription GetPost($id: Int!) {
         username
         reputation
       }
+    }
+    votes {
+      profile_id
+      value
     }
   }
 }
