@@ -1,15 +1,13 @@
 import {
     GoogleAuthProvider,
-    // signInWithPopup,
+    signInWithPopup,
     signInWithRedirect,
     signOut,
 } from "firebase/auth";
 import { getAuth } from "firebase/auth";
 import app from "@/lib/firebase/client/firebase";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-// import firebase from "firebase/app";
-// import "firebase/auth";
-// import "firebase/database";
+import { isMobile } from "react-device-detect";
 
 interface HasuraClaim {
     "x-hasura-user-id": string;
@@ -26,35 +24,41 @@ export async function signInWithGoogle(router: AppRouterInstance, nextRoute: str
     console.log('signin with google')
     const provider = new GoogleAuthProvider();
 
-    try {
-        await signInWithRedirect(auth, provider);
-        
-        // await signInWithPopup(auth, provider).then(async (result) => {
-        //     if (result.user) {
-        //         let token = await result.user.getIdToken();
-        //         console.log('not idTokenResult: ', token, '\n');
+    if (isMobile) {
+        try {
+            await signInWithPopup(auth, provider).then(async (result) => {
+                if (result.user) {
+                    let token = await result.user.getIdToken();
+                    console.log('not idTokenResult: ', token, '\n');
 
-        //         // Not sure I need to do this (get the hasura claim). All I need
-        //         // is the uid, which I can get from the decoded token.
-        //         // https://hasura.io/blog/authentication-and-authorization-using-hasura-and-firebase
-        //         const idTokenResult = await result.user.getIdTokenResult();
-        //         console.log("idTokenResult: ", idTokenResult.claims, "\n");
-        //         const hasuraClaim: HasuraClaim = idTokenResult.claims[HASURA_JWT_CLAIM_URL] as HasuraClaim;
+                    // Not sure I need to do this (get the hasura claim). All I need
+                    // is the uid, which I can get from the decoded token.
+                    // https://hasura.io/blog/authentication-and-authorization-using-hasura-and-firebase
+                    const idTokenResult = await result.user.getIdTokenResult();
+                    console.log("idTokenResult: ", idTokenResult.claims, "\n");
+                    const hasuraClaim: HasuraClaim = idTokenResult.claims[HASURA_JWT_CLAIM_URL] as HasuraClaim;
 
-        //         if (!hasuraClaim) {
-        //             console.error("No Hasura claim found in token.");
-        //             // Check if refresh is required.
-        //             return;
-        //         }
+                    if (!hasuraClaim) {
+                        console.error("No Hasura claim found in token.");
+                        // Check if refresh is required.
+                        return;
+                    }
 
-        //         router.push(nextRoute);
-        //         return;
-        //     } else {
-        //         console.log('no user')
-        //     }
-        // });
-    } catch (error) {
-        console.error("Error signing in with Google", error);
+                    router.push(nextRoute);
+                    return;
+                } else {
+                    console.log('no user')
+                }
+            });
+        } catch (error) {
+            console.error("Error signing in with Google", error);
+        }
+    } else {
+        try {
+            await signInWithRedirect(auth, provider);
+        } catch (error) {
+            console.error("Error signing in with Google", error);
+        }
     }
 }
 
