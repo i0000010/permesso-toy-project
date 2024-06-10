@@ -22,43 +22,43 @@ export const HASURA_JWT_CLAIM_URL = "https://hasura.io/jwt/claims";
 // this executes client side
 export async function signInWithGoogle(router: AppRouterInstance, nextRoute: string): Promise<void> {
     console.log('signin with google')
-    const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider();  
 
-    if (isMobile) {
-        try {
-            await signInWithPopup(auth, provider).then(async (result) => {
-                if (result.user) {
-                    let token = await result.user.getIdToken();
-                    console.log('not idTokenResult: ', token, '\n');
+    // if (isMobile) {
+    //     try {
+    //         const result = await signInWithPopup(auth, provider);
+    //         if (result.user) {
+    //             let token = await result.user.getIdToken();
+    //             console.log('not idTokenResult: ', token, '\n');
 
-                    // Not sure I need to do this (get the hasura claim). All I need
-                    // is the uid, which I can get from the decoded token.
-                    // https://hasura.io/blog/authentication-and-authorization-using-hasura-and-firebase
-                    const idTokenResult = await result.user.getIdTokenResult();
-                    console.log("idTokenResult: ", idTokenResult.claims, "\n");
-                    const hasuraClaim: HasuraClaim = idTokenResult.claims[HASURA_JWT_CLAIM_URL] as HasuraClaim;
+    //             // Not sure I need to do this (get the hasura claim). All I need
+    //             // is the uid, which I can get from the decoded token.
+    //             // https://hasura.io/blog/authentication-and-authorization-using-hasura-and-firebase
+    //             const idTokenResult = await result.user.getIdTokenResult();
+    //             console.log("idTokenResult: ", idTokenResult.claims, "\n");
+    //             const hasuraClaim: HasuraClaim = idTokenResult.claims[HASURA_JWT_CLAIM_URL] as HasuraClaim;
 
-                    if (!hasuraClaim) {
-                        console.error("No Hasura claim found in token.");
-                        // Check if refresh is required.
-                        return;
-                    }
+    //             if (!hasuraClaim) {
+    //                 console.error("No Hasura claim found in token.");
+    //                 router.push('no-hasura-claim');
+    //                 // Check if refresh is required.
+    //                 return;
+    //             }
 
-                    router.push(nextRoute);
-                    return;
-                } else {
-                    console.log('no user')
-                }
-            });
-        } catch (error) {
-            console.error("Error signing in with Google", error);
-        }
-    } else {
-        try {
-            await signInWithRedirect(auth, provider);
-        } catch (error) {
-            console.error("Error signing in with Google", error);
-        }
+    //             router.push(nextRoute);
+    //             return;
+    //         } else {
+    //             router.push('no-user');
+    //             console.log('no user')
+    //         }
+    //     } catch (error) {
+    //         console.error("Error signing in with Google", error);
+    //     }
+    // }
+    try {
+        await signInWithRedirect(auth, provider);
+    } catch (error) {
+        console.error("Error signing in with Google", error);
     }
 }
 
