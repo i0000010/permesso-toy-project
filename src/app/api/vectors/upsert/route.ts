@@ -12,9 +12,9 @@ const PostSchema = Joi.object({
     id: Joi.number().integer().positive().required(),
     title: Joi.string().required(),
     body: Joi.string().required(),
-    score: Joi.number().integer().required(),
-    created_at: Joi.string().required(),
-    profile_id: Joi.number().integer().positive().required(),
+    score: Joi.number().integer().optional(),
+    created_at: Joi.string().optional(),
+    profile_id: Joi.number().integer().positive().optional(),
 })
 
 const CommentSchema = Joi.object({
@@ -22,10 +22,10 @@ const CommentSchema = Joi.object({
     post_id: Joi.number().integer().positive().required(),
     parent_comment_id: Joi.number().integer().positive().allow(null),
     body: Joi.string().required(),
-    score: Joi.number().integer().required(),
-    accepted_answer: Joi.boolean().required(),
-    created_at: Joi.string().required(),
-    profile_id: Joi.number().integer().positive().required(),
+    score: Joi.number().integer().optional(),
+    accepted_answer: Joi.boolean().optional(),
+    created_at: Joi.string().optional(),
+    profile_id: Joi.number().integer().positive().optional(),
 })
 
 const EventSchema = Joi.object({
